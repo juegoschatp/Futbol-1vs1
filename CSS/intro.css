@@ -1,0 +1,296 @@
+/* ========================================================= */
+/* INTRO.CSS                                                 */
+/* Pantalla inicial "TOCA PARA JUGAR"                       */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL                                       */
+/* ========================================================= */
+
+#introScreen {
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    background: #050608;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    user-select: none;
+
+    pointer-events: auto;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transition: none;
+}
+
+
+/* ========================================================= */
+/* MITADES DE LA IMAGEN                                      */
+/* ========================================================= */
+
+.intro-half {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 50%;
+
+    overflow: hidden;
+
+    z-index: 2;
+
+    background-color: #050608;
+
+    background-image: url("../ASSETS/intro.png");
+
+    background-repeat: no-repeat;
+
+    /*
+       La imagen completa ocupa el ancho de las
+       dos mitades juntas.
+    */
+    background-size: 200% 100%;
+
+    will-change: transform;
+
+    transition:
+        transform 0.95s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+
+/* ========================================================= */
+/* MITAD IZQUIERDA                                           */
+/* ========================================================= */
+
+.intro-half-left {
+    left: 0;
+
+    background-position: left center;
+
+    border-right: none;
+}
+
+
+/* ========================================================= */
+/* MITAD DERECHA                                             */
+/* ========================================================= */
+
+.intro-half-right {
+    right: 0;
+
+    background-position: right center;
+
+    border-left: none;
+}
+
+
+/* ========================================================= */
+/* PARTÍCULAS                                                 */
+/* ========================================================= */
+
+.intro-particles {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 8;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+
+.intro-particle {
+    position: absolute;
+
+    width: var(--size);
+    height: var(--size);
+
+    left: var(--x);
+    top: var(--y);
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            190,
+            194,
+            198,
+            var(--opacity)
+        );
+
+    box-shadow:
+        0 0 var(--glow)
+        rgba(220, 223, 226, 0.12);
+
+    animation:
+        introParticleFloat
+        var(--duration)
+        ease-in-out
+        var(--delay)
+        infinite alternate;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+@keyframes introParticleFloat {
+
+    0% {
+        transform:
+            translate3d(0, 0, 0)
+            scale(0.85);
+
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform:
+            translate3d(
+                var(--move-x),
+                var(--move-y),
+                0
+            )
+            scale(1.15);
+
+        opacity: 0.35;
+    }
+}
+
+
+/* ========================================================= */
+/* OCULTAR TEXTOS CREADOS POR CÓDIGO                         */
+/* ========================================================= */
+
+/*
+   El texto de intro.png SÍ permanece.
+
+   Estos elementos son los textos que estaban
+   siendo dibujados mediante HTML.
+*/
+
+.intro-content {
+    display: none !important;
+}
+
+
+/* ========================================================= */
+/* OCULTAR LÍNEA CENTRAL CREADA POR CSS                      */
+/* ========================================================= */
+
+/*
+   intro.png ya contiene su propia composición.
+   Por eso no agregamos otra línea encima.
+*/
+
+.intro-center-line {
+    display: none !important;
+}
+
+
+/* ========================================================= */
+/* APERTURA                                                  */
+/* ========================================================= */
+
+#introScreen.intro-opening .intro-half-left {
+    transform: translateX(-100%);
+}
+
+
+#introScreen.intro-opening .intro-half-right {
+    transform: translateX(100%);
+}
+
+
+/*
+   Las partículas desaparecen junto
+   con la intro para no quedarse flotando
+   encima del menú.
+*/
+
+#introScreen.intro-opening .intro-particles {
+    opacity: 0;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+
+/* ========================================================= */
+/* INTRO FINALIZADA                                          */
+/* ========================================================= */
+
+#introScreen.intro-finished {
+    visibility: hidden;
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+
+/* ========================================================= */
+/* REDUCCIÓN DE MOVIMIENTO                                   */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .intro-half {
+        transition-duration: 0.45s;
+    }
+
+    .intro-particle {
+        animation: none;
+    }
+
+}
+
+
+/* ========================================================= */
+/* MÓVILES HORIZONTALES                                      */
+/* ========================================================= */
+
+@media (orientation: landscape) and (max-height: 600px) {
+
+    #introScreen {
+        min-height: 100dvh;
+    }
+
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MUY BAJAS                                       */
+/* ========================================================= */
+
+@media (orientation: landscape) and (max-height: 420px) {
+
+    #introScreen {
+        min-height: 100dvh;
+    }
+
+}

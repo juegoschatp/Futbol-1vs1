@@ -1,0 +1,2058 @@
+/* ========================================================= */
+/* GAME.CSS                                                   */
+/* Pantalla principal del partido                             */
+/* Canvas, HUD, mensajes y pantalla final                     */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* PANTALLA DEL PARTIDO                                       */
+/* ========================================================= */
+
+.game-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    isolation: isolate;
+
+    width: 100vw;
+    height: 100dvh;
+
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    background: #050709;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR PRINCIPAL                                       */
+/* ========================================================= */
+
+#gameScreen {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100dvh;
+
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+/* ========================================================= */
+/* CANVAS                                                     */
+/* ========================================================= */
+
+#gameCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: block;
+
+    width: 100vw;
+    height: 100dvh;
+
+    max-width: none;
+    max-height: none;
+
+    background: #111820;
+
+    image-rendering: auto;
+
+    touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    outline: none;
+}
+
+
+/* ========================================================= */
+/* MUNDO DEL JUEGO                                            */
+/* ========================================================= */
+
+.game-world {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+.game-world::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 42%,
+            rgba(0, 0, 0, 0.16) 76%,
+            rgba(0, 0, 0, 0.4) 100%
+        );
+
+    pointer-events: none;
+}
+
+
+.game-world::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.15),
+            transparent 18%,
+            transparent 82%,
+            rgba(0, 0, 0, 0.18)
+        );
+
+    pointer-events: none;
+}
+
+
+/* ========================================================= */
+/* CONTENEDOR CANVAS                                          */
+/* ========================================================= */
+
+.canvas-container {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #050709;
+}
+
+
+/* ========================================================= */
+/* ESTADOS                                                    */
+/* ========================================================= */
+
+.game-screen.is-paused #gameCanvas {
+
+    filter: brightness(0.72);
+}
+
+
+.game-screen.is-paused::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    background: rgba(0, 0, 0, 0.22);
+
+    pointer-events: none;
+}
+
+
+.game-screen.is-loading #gameCanvas {
+
+    opacity: 0;
+}
+
+
+.game-screen.is-ready #gameCanvas {
+
+    opacity: 1;
+}
+
+
+/* ========================================================= */
+/* HUD DEL PARTIDO                                            */
+/* ========================================================= */
+
+#matchInterface {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 25;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+/* ========================================================= */
+/* CRONÓMETRO                                                 */
+/* ========================================================= */
+
+/*
+ * El marcador gris ya existe en el HTML.
+ *
+ * Este estilo coloca el tiempo exactamente
+ * en la zona central superior.
+ */
+
+#matchTime {
+
+    position: absolute;
+
+    top: 58px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 76px;
+
+    height: 34px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: clamp(
+        0.85rem,
+        1.7vw,
+        1.15rem
+    );
+
+    font-weight: 950;
+
+    line-height: 1;
+
+    letter-spacing: 0.05em;
+
+    text-align: center;
+
+    font-variant-numeric: tabular-nums;
+
+    pointer-events: none;
+
+    z-index: 40;
+}
+
+
+/*
+ * En teléfonos horizontales el marcador
+ * está un poco más arriba.
+ */
+
+@media (
+    max-width: 760px
+) and (
+    orientation: landscape
+) {
+
+    #matchTime {
+
+        top: 50px;
+
+        min-width: 66px;
+
+        height: 30px;
+
+        padding: 0 10px;
+
+        font-size: 0.86rem;
+    }
+}
+
+
+/* ========================================================= */
+/* INDICADOR DE CARGA                                         */
+/* ========================================================= */
+
+.game-loading {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 50;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 16px;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(25, 31, 39, 0.92),
+            rgba(5, 7, 9, 0.98)
+        );
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+
+.game-loading.hidden,
+.game-loading.is-hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+}
+
+
+.game-loading-spinner {
+
+    width: 42px;
+    height: 42px;
+
+    border: 3px solid rgba(
+        255,
+        255,
+        255,
+        0.14
+    );
+
+    border-top-color: #ef4444;
+
+    border-radius: 50%;
+
+    animation:
+        gameLoadingSpin
+        0.8s linear infinite;
+}
+
+
+@keyframes gameLoadingSpin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.game-loading-text {
+
+    color: #8e98a6;
+
+    font-size: 0.68rem;
+
+    font-weight: 850;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+}
+
+
+/* ========================================================= */
+/* PAUSA                                                     */
+/* ========================================================= */
+
+.game-pause-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 30;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(
+        3,
+        5,
+        7,
+        0.48
+    );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+
+.game-pause-overlay.visible,
+.game-pause-overlay.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+.pause-panel {
+
+    width: min(
+        90%,
+        360px
+    );
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28, 33, 41, 0.97),
+            rgba(12, 15, 19, 0.98)
+        );
+
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.13
+    );
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 24px 70px rgba(
+            0,
+            0,
+            0,
+            0.42
+        );
+}
+
+
+.pause-title {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 1.35rem;
+
+    font-weight: 950;
+
+    letter-spacing: -0.04em;
+
+    text-transform: uppercase;
+}
+
+
+.pause-description {
+
+    margin: 0;
+
+    color: #8993a1;
+
+    font-size: 0.76rem;
+
+    font-weight: 600;
+
+    line-height: 1.55;
+}
+
+
+/* ========================================================= */
+/* MENSAJE DE GOL                                             */
+/* ========================================================= */
+
+/*
+ * IMPORTANTE:
+ *
+ * game.js utiliza:
+ *
+ * #goalMessage
+ * #goalMessageText
+ *
+ * Por eso no dependemos de .goal-announcement.
+ */
+
+#goalMessage {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 60;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+}
+
+
+/*
+ * Estado visible activado por game.js.
+ */
+
+#goalMessage.visible {
+
+    display: flex;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    animation:
+        goalMessageAppear
+        0.3s ease-out both;
+}
+
+
+@keyframes goalMessageAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform: scale(0.9);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1);
+    }
+}
+
+
+/*
+ * Si el HTML contiene directamente
+ * #goalMessageText, lo convertimos
+ * en un cartel arcade.
+ */
+
+#goalMessageText {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 180px;
+
+    min-height: 76px;
+
+    padding: 14px 28px;
+
+    box-sizing: border-box;
+
+    color: #ffffff;
+
+    background: rgba(
+        8,
+        12,
+        16,
+        0.92
+    );
+
+    border: 2px solid rgba(
+        255,
+        255,
+        255,
+        0.22
+    );
+
+    border-radius: 12px;
+
+    font-family: inherit;
+
+    font-size: clamp(
+        2rem,
+        6vw,
+        4.8rem
+    );
+
+    font-weight: 1000;
+
+    line-height: 1;
+
+    letter-spacing: -0.05em;
+
+    text-transform: uppercase;
+
+    text-align: center;
+
+    text-shadow:
+        0 4px 16px rgba(
+            0,
+            0,
+            0,
+            0.45
+        );
+
+    box-shadow:
+        0 16px 40px rgba(
+            0,
+            0,
+            0,
+            0.3
+        );
+}
+
+
+/* ========================================================= */
+/* MENSAJE CENTRAL GENÉRICO                                  */
+/* ========================================================= */
+
+.game-center-message {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    z-index: 25;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: max-content;
+
+    max-width: 90%;
+
+    text-align: center;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.game-center-message.visible,
+.game-center-message.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    animation:
+        centerMessageIn
+        0.3s ease both;
+}
+
+
+@keyframes centerMessageIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -46%
+            )
+            scale(0.94);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+}
+
+
+.game-center-message-title {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            1.6rem,
+            4vw,
+            3.4rem
+        );
+
+    font-weight: 950;
+
+    letter-spacing: -0.06em;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+}
+
+
+.game-center-message-subtitle {
+
+    margin: 0;
+
+    color: #a7b0bc;
+
+    font-size:
+        clamp(
+            0.62rem,
+            1vw,
+            0.82rem
+        );
+
+    font-weight: 800;
+
+    letter-spacing: 0.2em;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+}
+
+
+/* ========================================================= */
+/* PANTALLA FINAL DEL PARTIDO                                 */
+/* ========================================================= */
+
+#matchEndScreen {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 80;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(18, 25, 32, 0.58) 0%,
+            rgba(4, 7, 10, 0.82) 58%,
+            rgba(2, 4, 6, 0.94) 100%
+        );
+
+    backdrop-filter: blur(3px);
+
+    -webkit-backdrop-filter: blur(3px);
+
+    pointer-events: auto;
+
+    opacity: 0;
+
+    visibility: hidden;
+}
+
+
+/* ========================================================= */
+/* ESTADO ACTIVO                                              */
+/* ========================================================= */
+
+#matchEndScreen.active {
+
+    display: flex;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    animation:
+        matchEndAppear
+        0.45s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        ) both;
+}
+
+
+@keyframes matchEndAppear {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+}
+
+
+/* ========================================================= */
+/* DECORACIÓN DEL FONDO                                       */
+/* ========================================================= */
+
+#matchEndScreen::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025),
+            transparent 30%,
+            transparent 70%,
+            rgba(255, 255, 255, 0.025)
+        );
+
+    pointer-events: none;
+}
+
+
+#matchEndScreen::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(
+        760px,
+        90vw
+    );
+
+    height: min(
+        420px,
+        70vh
+    );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.035
+    );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* ========================================================= */
+/* TARJETA FINAL                                              */
+/* ========================================================= */
+
+#matchEndScreen .match-end-card {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        760px,
+        92vw
+    );
+
+    min-height: 390px;
+
+    padding:
+        clamp(24px, 4vw, 42px)
+        clamp(26px, 5vw, 64px);
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 31, 38, 0.98),
+            rgba(8, 12, 16, 0.985)
+        );
+
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.13
+    );
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 30px 90px rgba(
+            0,
+            0,
+            0,
+            0.55
+        ),
+        inset 0 1px 0 rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+    overflow: hidden;
+
+    animation:
+        endCardEnter
+        0.55s
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        )
+        0.05s
+        both;
+}
+
+
+@keyframes endCardEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(24px)
+            scale(0.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+}
+
+
+/* ========================================================= */
+/* LÍNEA SUPERIOR DECORATIVA                                 */
+/* ========================================================= */
+
+#matchEndScreen .match-end-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 55%;
+    height: 2px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.72),
+            transparent
+        );
+
+    opacity: 0.8;
+}
+
+
+/* ========================================================= */
+/* BRILLO INTERNO                                             */
+/* ========================================================= */
+
+#matchEndScreen .match-end-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: -120px;
+
+    width: 320px;
+    height: 220px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255, 255, 255, 0.055),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* ========================================================= */
+/* TÍTULO                                                     */
+/* ========================================================= */
+
+#matchEndScreen .match-end-card h2 {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            1.25rem,
+            3vw,
+            2rem
+        );
+
+    font-weight: 950;
+
+    line-height: 1;
+
+    letter-spacing:
+        0.08em;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 4px 20px rgba(
+            0,
+            0,
+            0,
+            0.45
+        );
+}
+
+
+/* ========================================================= */
+/* PEQUEÑA LÍNEA BAJO EL TÍTULO                              */
+/* ========================================================= */
+
+#matchEndScreen .match-end-card h2::after {
+
+    content: "";
+
+    display: block;
+
+    width: 42px;
+    height: 2px;
+
+    margin:
+        12px
+        auto
+        0;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.55
+    );
+}
+
+
+/* ========================================================= */
+/* RESULTADO FINAL                                            */
+/* ========================================================= */
+
+#matchEndScreen .final-score {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(100px, 1fr)
+        auto
+        minmax(100px, 1fr);
+
+    align-items: center;
+
+    width: 100%;
+
+    max-width: 600px;
+
+    padding:
+        12px
+        0;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================================= */
+/* NOMBRES DE EQUIPOS                                         */
+/* ========================================================= */
+
+#matchEndScreen #finalTeam1Name,
+#matchEndScreen #finalTeam2Name {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 0;
+
+    color: #aeb7c2;
+
+    font-size:
+        clamp(
+            0.72rem,
+            1.5vw,
+            1rem
+        );
+
+    font-weight: 950;
+
+    letter-spacing:
+        0.12em;
+
+    line-height: 1.2;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+#matchEndScreen #finalTeam1Name {
+
+    text-align: right;
+}
+
+
+#matchEndScreen #finalTeam2Name {
+
+    text-align: left;
+}
+
+
+/* ========================================================= */
+/* MARCADOR                                                   */
+/* ========================================================= */
+
+#matchEndScreen #finalScore {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 170px;
+
+    padding:
+        0 24px;
+
+    box-sizing: border-box;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            3rem,
+            7vw,
+            5.4rem
+        );
+
+    font-weight: 1000;
+
+    line-height: 0.9;
+
+    letter-spacing:
+        -0.08em;
+
+    font-variant-numeric:
+        tabular-nums;
+
+    text-align: center;
+
+    text-shadow:
+        0 6px 24px rgba(
+            0,
+            0,
+            0,
+            0.5
+        );
+}
+
+
+/* ========================================================= */
+/* SEPARADORES DEL RESULTADO                                  */
+/* ========================================================= */
+
+#matchEndScreen .final-score::before,
+#matchEndScreen .final-score::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+
+    width: 15%;
+
+    max-width: 90px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.12)
+        );
+}
+
+
+#matchEndScreen .final-score::before {
+
+    left: 0;
+}
+
+
+#matchEndScreen .final-score::after {
+
+    right: 0;
+
+    transform:
+        scaleX(-1);
+}
+
+
+/* ========================================================= */
+/* SEPARADOR CENTRAL                                          */
+/* ========================================================= */
+
+#matchEndScreen .final-score strong::first-letter {
+
+    letter-spacing: -0.08em;
+}
+
+
+/* ========================================================= */
+/* BOTONES                                                    */
+/* ========================================================= */
+
+#matchEndScreen #playAgainButton,
+#matchEndScreen #endBackToMenuButton {
+
+    position: relative;
+
+    z-index: 3;
+
+    width: min(
+        310px,
+        80vw
+    );
+
+    min-height: 48px;
+
+    padding:
+        0 24px;
+
+    box-sizing: border-box;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size:
+        0.72rem;
+
+    font-weight: 950;
+
+    letter-spacing:
+        0.12em;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    touch-action: manipulation;
+
+    transition:
+        transform 0.12s ease,
+        background-color 0.12s ease,
+        border-color 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+
+/* ========================================================= */
+/* VOLVER A JUGAR                                             */
+/* ========================================================= */
+
+#matchEndScreen #playAgainButton {
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #c92f2f
+        );
+
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.2
+    );
+
+    box-shadow:
+        0 10px 28px rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+}
+
+
+#matchEndScreen #playAgainButton:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f05252,
+            #d93636
+        );
+
+    border-color:
+        rgba(
+            255,
+            255,
+            255,
+            0.34
+        );
+
+    box-shadow:
+        0 14px 34px rgba(
+            0,
+            0,
+            0,
+            0.32
+        );
+}
+
+
+#matchEndScreen #playAgainButton:active {
+
+    transform:
+        scale(0.97);
+
+    box-shadow:
+        0 6px 18px rgba(
+            0,
+            0,
+            0,
+            0.22
+        );
+}
+
+
+/* ========================================================= */
+/* VOLVER AL MENÚ                                             */
+/* ========================================================= */
+
+#matchEndScreen #endBackToMenuButton {
+
+    color: #c1c9d2;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.045
+        );
+
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.13
+    );
+}
+
+
+#matchEndScreen #endBackToMenuButton:hover {
+
+    color: #ffffff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.085
+        );
+
+    border-color:
+        rgba(
+            255,
+            255,
+            255,
+            0.25
+        );
+}
+
+
+#matchEndScreen #endBackToMenuButton:active {
+
+    transform:
+        scale(0.97);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.035
+        );
+}
+
+
+/* ========================================================= */
+/* MÓVIL HORIZONTAL                                          */
+/* ========================================================= */
+
+@media (
+    max-width: 900px
+) and (
+    orientation: landscape
+) {
+
+    #matchEndScreen {
+
+        padding: 10px;
+    }
+
+
+    #matchEndScreen .match-end-card {
+
+        width: min(
+            88vw,
+            680px
+        );
+
+        min-height: 330px;
+
+        padding:
+            22px
+            34px;
+
+        gap: 14px;
+
+        border-radius: 16px;
+    }
+
+
+    #matchEndScreen .match-end-card h2 {
+
+        font-size: 1.25rem;
+
+        letter-spacing:
+            0.07em;
+    }
+
+
+    #matchEndScreen .final-score {
+
+        padding: 6px 0;
+    }
+
+
+    #matchEndScreen #finalScore {
+
+        min-width: 135px;
+
+        padding:
+            0 14px;
+
+        font-size: 3.5rem;
+    }
+
+
+    #matchEndScreen #finalTeam1Name,
+    #matchEndScreen #finalTeam2Name {
+
+        font-size: 0.65rem;
+    }
+
+
+    #matchEndScreen #playAgainButton,
+    #matchEndScreen #endBackToMenuButton {
+
+        width: min(
+            260px,
+            70vw
+        );
+
+        min-height: 43px;
+
+        font-size: 0.66rem;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS HORIZONTALES MUY BAJAS                           */
+/* ========================================================= */
+
+@media (
+    max-height: 520px
+) and (
+    orientation: landscape
+) {
+
+    #matchEndScreen .match-end-card {
+
+        min-height: 285px;
+
+        padding:
+            16px
+            28px;
+
+        gap: 10px;
+    }
+
+
+    #matchEndScreen .match-end-card h2 {
+
+        font-size: 1.05rem;
+    }
+
+
+    #matchEndScreen .match-end-card h2::after {
+
+        margin-top: 7px;
+
+        width: 32px;
+    }
+
+
+    #matchEndScreen #finalScore {
+
+        font-size: 2.9rem;
+
+        min-width: 115px;
+    }
+
+
+    #matchEndScreen #playAgainButton,
+    #matchEndScreen #endBackToMenuButton {
+
+        min-height: 38px;
+
+        font-size: 0.58rem;
+    }
+}
+
+
+/* ========================================================= */
+/* REDUCCIÓN DE MOVIMIENTO                                    */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #matchEndScreen.active,
+    #matchEndScreen .match-end-card {
+
+        animation: none;
+    }
+}
+
+
+/* ========================================================= */
+/* DECORACIÓN DEL CAMPO                                       */
+/* ========================================================= */
+
+.field-decoration {
+
+    position: absolute;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    opacity: 0.7;
+}
+
+
+.field-vignette {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 50%,
+            rgba(0, 0, 0, 0.1) 75%,
+            rgba(0, 0, 0, 0.3) 100%
+        );
+}
+
+
+/* ========================================================= */
+/* CUENTA REGRESIVA DE REANUDACIÓN                            */
+/* ========================================================= */
+
+.resume-countdown {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 40;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+}
+
+
+.resume-countdown.visible,
+.resume-countdown.active {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+.resume-countdown-value {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 112px;
+    height: 112px;
+
+    color: #ffffff;
+
+    background: rgba(
+        5,
+        7,
+        10,
+        0.68
+    );
+
+    border: 2px solid rgba(
+        255,
+        255,
+        255,
+        0.2
+    );
+
+    border-radius: 50%;
+
+    font-size: 4rem;
+
+    font-weight: 950;
+
+    letter-spacing: -0.08em;
+}
+
+
+/* ========================================================= */
+/* TRANSICIONES                                              */
+/* ========================================================= */
+
+.game-screen.screen-enter {
+
+    animation:
+        gameScreenEnter
+        0.4s ease both;
+}
+
+
+.game-screen.screen-exit {
+
+    animation:
+        gameScreenExit
+        0.3s ease both;
+}
+
+
+@keyframes gameScreenEnter {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes gameScreenExit {
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
+/* ========================================================= */
+/* MÓVIL HORIZONTAL                                          */
+/* ========================================================= */
+
+@media (
+    max-width: 900px
+) and (
+    orientation: landscape
+) {
+
+    .pause-panel {
+
+        width: min(
+            80%,
+            320px
+        );
+
+        padding: 22px;
+    }
+
+
+    .pause-title {
+
+        font-size: 1.15rem;
+    }
+
+
+    .pause-description {
+
+        font-size: 0.68rem;
+    }
+
+
+    .resume-countdown-value {
+
+        width: 86px;
+        height: 86px;
+
+        font-size: 3rem;
+    }
+
+
+    #matchEndScreen {
+
+        padding: 12px;
+    }
+
+
+    #matchEndScreen .end-panel,
+    #matchEndScreen .match-end-panel,
+    #matchEndScreen .final-panel {
+
+        gap: 12px;
+
+        padding: 20px;
+    }
+
+
+    #finalScore {
+
+        font-size: 3.2rem;
+    }
+
+
+    #endBackToMenuButton,
+    #backToMenuButton {
+
+        min-height: 42px;
+
+        min-width: 170px;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS HORIZONTALES MUY BAJAS                           */
+/* ========================================================= */
+
+@media (
+    max-height: 520px
+) and (
+    orientation: landscape
+) {
+
+    .game-screen,
+    #gameScreen {
+
+        min-height: 100svh;
+
+        height: 100svh;
+    }
+
+
+    .game-loading-spinner {
+
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .game-loading {
+
+        gap: 10px;
+    }
+
+
+    .game-loading-text {
+
+        font-size: 0.56rem;
+    }
+
+
+    .resume-countdown-value {
+
+        width: 72px;
+        height: 72px;
+
+        font-size: 2.5rem;
+    }
+
+
+    #matchTime {
+
+        top: 45px;
+
+        font-size: 0.8rem;
+    }
+
+
+    #matchEndScreen .end-panel,
+    #matchEndScreen .match-end-panel,
+    #matchEndScreen .final-panel {
+
+        padding: 16px;
+
+        gap: 9px;
+    }
+
+
+    #matchEndScreen h1,
+    #matchEndScreen h2,
+    #matchEndScreen .end-title,
+    #matchEndScreen .match-end-title {
+
+        font-size: 1.35rem;
+    }
+
+
+    #finalScore {
+
+        font-size: 2.8rem;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLA VERTICAL                                         */
+/* ========================================================= */
+
+@media (orientation: portrait) {
+
+    .game-screen,
+    #gameScreen {
+
+        min-height: 100svh;
+
+        height: 100svh;
+    }
+}
+
+
+/* ========================================================= */
+/* REDUCCIÓN DE MOVIMIENTO                                    */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .game-loading-spinner {
+
+        animation: none;
+    }
+
+
+    .game-center-message.visible,
+    .game-screen.screen-enter,
+    .game-screen.screen-exit,
+    #goalMessage.visible,
+    #matchEndScreen.active {
+
+        animation: none;
+    }
+
+
+    .game-pause-overlay,
+    .game-center-message {
+
+        transition: none;
+    }
+}

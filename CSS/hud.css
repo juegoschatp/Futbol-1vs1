@@ -1,0 +1,1023 @@
+/* ========================================================= */
+/* HUD.CSS                                                    */
+/* Interfaz superior del partido                             */
+/* Marcador, tiempo, salida e información visual              */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR GENERAL DEL HUD                                 */
+/* ========================================================= */
+
+#matchInterface,
+#gameHud,
+.game-hud {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+/* ========================================================= */
+/* MARCADOR PRINCIPAL                                         */
+/* ========================================================= */
+
+#scoreboard,
+.scoreboard {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+
+    width: min(430px, 58vw);
+    min-height: 64px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(20, 25, 32, 0.98),
+            rgba(7, 10, 14, 0.98)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+/* Línea superior de colores */
+
+#scoreboard::before,
+.scoreboard::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ef4444 0%,
+            #ef4444 42%,
+            rgba(255, 255, 255, 0.32) 42%,
+            rgba(255, 255, 255, 0.32) 58%,
+            #3b82f6 58%,
+            #3b82f6 100%
+        );
+
+    z-index: 2;
+}
+
+
+/* Brillo interior */
+
+#scoreboard::after,
+.scoreboard::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.045),
+            transparent 45%
+        );
+
+    pointer-events: none;
+}
+
+
+/* ========================================================= */
+/* EQUIPOS DEL MARCADOR                                       */
+/* ========================================================= */
+
+.score-team {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: 38%;
+
+    padding: 12px 16px;
+}
+
+
+/* Equipo izquierdo */
+
+.score-team-left {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+
+/* Equipo derecho */
+
+.score-team-right {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+
+/* ========================================================= */
+/* NOMBRES DE LOS EQUIPOS                                     */
+/* ========================================================= */
+
+#team1Name,
+#team2Name,
+.score-team-name {
+    display: inline-block;
+
+    max-width: 90px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: clamp(0.62rem, 1vw, 0.8rem);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+#team1Name,
+.score-team-left #team1Name,
+.score-team-left .score-team-name {
+    color: #fca5a5;
+}
+
+#team2Name,
+.score-team-right #team2Name,
+.score-team-right .score-team-name {
+    color: #93c5fd;
+}
+
+
+/* ========================================================= */
+/* PUNTUACIONES                                               */
+/* ========================================================= */
+
+#team1Score,
+#team2Score {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 24px;
+
+    color: #ffffff;
+
+    font-size: clamp(1.35rem, 2.6vw, 2rem);
+    font-weight: 950;
+    letter-spacing: -0.07em;
+    line-height: 1;
+}
+
+
+/* ========================================================= */
+/* INDICADORES DE EQUIPO                                     */
+/* ========================================================= */
+
+.score-team-left::before,
+.score-team-right::after,
+.score-team-indicator {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+}
+
+
+/* Indicador rojo */
+
+.score-team-left::before {
+    background: #ef4444;
+    box-shadow:
+        0 0 12px rgba(239, 68, 68, 0.8);
+}
+
+
+/* Indicador azul */
+
+.score-team-right::after {
+    background: #3b82f6;
+    box-shadow:
+        0 0 12px rgba(59, 130, 246, 0.8);
+}
+
+
+/* ========================================================= */
+/* ZONA CENTRAL DEL MARCADOR                                  */
+/* ========================================================= */
+
+.score-time {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24%;
+
+    min-width: 72px;
+
+    padding: 10px 8px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    border-left: 1px solid rgba(255, 255, 255, 0.09);
+    border-right: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+
+/* ========================================================= */
+/* CRONÓMETRO                                                 */
+/* ========================================================= */
+
+#matchTime,
+.match-time {
+    position: relative;
+
+    top: auto;
+    left: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 0;
+
+    transform: none;
+
+    color: #ffffff;
+
+    background: transparent;
+
+    border: 0;
+    border-radius: 0;
+
+    font-size: clamp(0.82rem, 1.5vw, 1.15rem);
+    font-weight: 950;
+    letter-spacing: 0.04em;
+    line-height: 1;
+
+    box-shadow: none;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.18s ease,
+        color 0.18s ease;
+}
+
+
+/* ========================================================= */
+/* INDICADOR DEL CRONÓMETRO                                   */
+/* ========================================================= */
+
+#matchTime::before,
+.match-time::before {
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 7px;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 8px rgba(34, 197, 94, 0.65);
+}
+
+
+/* ========================================================= */
+/* ÚLTIMOS 10 SEGUNDOS                                        */
+/* ========================================================= */
+
+#matchTime.urgent,
+.match-time.urgent {
+    color: #ffffff;
+
+    transform: scale(1.28);
+
+    animation:
+        timerUrgentPulse 0.65s ease-in-out infinite;
+}
+
+
+/* Punto del cronómetro durante los últimos 10 segundos */
+
+#matchTime.urgent::before,
+.match-time.urgent::before {
+    background: #ef4444;
+
+    box-shadow:
+        0 0 10px rgba(239, 68, 68, 0.9);
+
+    animation:
+        timerDotPulse 0.65s ease-in-out infinite;
+}
+
+
+/* ========================================================= */
+/* ANIMACIÓN DEL CRONÓMETRO                                   */
+/* ========================================================= */
+
+@keyframes timerUrgentPulse {
+
+    0%,
+    100% {
+        transform: scale(1.18);
+    }
+
+    50% {
+        transform: scale(1.38);
+    }
+}
+
+
+@keyframes timerDotPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.75;
+    }
+
+    50% {
+        transform: scale(1.45);
+        opacity: 1;
+    }
+}
+
+
+/* ========================================================= */
+/* ESTADO PAUSADO                                             */
+/* ========================================================= */
+
+#matchTime.is-paused::before,
+#matchTime.paused::before,
+.match-time.is-paused::before,
+.match-time.paused::before {
+    background: #f59e0b;
+
+    box-shadow:
+        0 0 10px rgba(245, 158, 11, 0.75);
+}
+
+
+/* ========================================================= */
+/* BOTÓN SALIR                                                */
+/* ========================================================= */
+
+#exitMatchButton {
+    position: absolute;
+    top: clamp(14px, 2vw, 26px);
+    right: clamp(14px, 2vw, 30px);
+    z-index: 30;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+    min-height: 36px;
+
+    padding: 9px 14px;
+
+    color: rgba(255, 255, 255, 0.76);
+    background:
+        rgba(5, 8, 11, 0.72);
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    line-height: 1;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    pointer-events: auto;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+#exitMatchButton:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+#exitMatchButton:active {
+    transform: scale(0.94);
+}
+
+
+/* ========================================================= */
+/* ESTADÍSTICAS DEL PARTIDO                                   */
+/* ========================================================= */
+
+.match-statistics {
+    position: absolute;
+    top: 110px;
+    left: clamp(14px, 2vw, 30px);
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 12px 14px;
+
+    background: rgba(5, 8, 11, 0.7);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+
+    pointer-events: none;
+}
+
+.match-stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.match-stat-label {
+    color: #737d8b;
+
+    font-size: 0.54rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.match-stat-value {
+    color: #dbe1e8;
+
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+
+
+/* ========================================================= */
+/* MENSAJE DE INICIO                                         */
+/* ========================================================= */
+
+.kickoff-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 40;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    text-align: center;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.kickoff-message.visible,
+.kickoff-message.active {
+    opacity: 1;
+    visibility: visible;
+
+    animation: kickoffMessageIn 1.4s ease both;
+}
+
+@keyframes kickoffMessageIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.9);
+    }
+
+    18% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    78% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -55%) scale(1.04);
+    }
+}
+
+.kickoff-title {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(1.8rem, 5vw, 4.5rem);
+    font-weight: 1000;
+    letter-spacing: -0.07em;
+    line-height: 0.9;
+    text-transform: uppercase;
+
+    text-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.42);
+}
+
+.kickoff-subtitle {
+    margin: 0;
+
+    color: #c0c8d3;
+
+    font-size: clamp(0.62rem, 1vw, 0.84rem);
+    font-weight: 850;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+}
+
+
+/* ========================================================= */
+/* FEEDBACK DE ACCIONES                                       */
+/* ========================================================= */
+
+.action-feedback {
+    position: absolute;
+    left: 50%;
+    bottom: 22%;
+    z-index: 25;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    text-align: center;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.action-feedback.visible,
+.action-feedback.active {
+    opacity: 1;
+    visibility: visible;
+
+    animation: actionFeedbackIn 0.7s ease both;
+}
+
+@keyframes actionFeedbackIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 8px) scale(0.94);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -8px) scale(1.03);
+    }
+}
+
+.action-feedback-title {
+    color: #ffffff;
+
+    font-size: clamp(0.95rem, 2vw, 1.5rem);
+    font-weight: 950;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.action-feedback-subtitle {
+    color: #aeb7c3;
+
+    font-size: clamp(0.56rem, 0.8vw, 0.7rem);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+
+/* ========================================================= */
+/* INDICADOR DE POTENCIA                                      */
+/* ========================================================= */
+
+.power-indicator {
+    position: absolute;
+    z-index: 25;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    width: 110px;
+
+    pointer-events: none;
+}
+
+.power-indicator-label {
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: 0.54rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.power-indicator-track {
+    width: 100%;
+    height: 5px;
+
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.power-indicator-fill {
+    width: 0%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #facc15,
+            #ef4444
+        );
+
+    border-radius: inherit;
+
+    transition:
+        width 0.08s linear;
+}
+
+
+/* ========================================================= */
+/* INDICADOR DEL JUGADOR CONTROLADO                           */
+/* ========================================================= */
+
+.controlled-player-indicator {
+    position: absolute;
+    z-index: 15;
+
+    width: 34px;
+    height: 12px;
+
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    border-top: 0;
+    border-radius: 0 0 50% 50%;
+
+    transform: translate(-50%, -50%);
+
+    opacity: 0.85;
+
+    pointer-events: none;
+}
+
+.controlled-player-indicator::after {
+    content: "";
+
+    position: absolute;
+    top: 3px;
+    left: 50%;
+
+    width: 5px;
+    height: 5px;
+
+    background: #ffffff;
+    border-radius: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+/* ========================================================= */
+/* INDICADOR DE POSESIÓN                                      */
+/* ========================================================= */
+
+.possession-indicator {
+    position: absolute;
+    z-index: 15;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    color: #ffffff;
+    background: rgba(8, 11, 14, 0.76);
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+
+    font-size: 0.6rem;
+    font-weight: 950;
+
+    pointer-events: none;
+
+    animation: possessionPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes possessionPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE: TABLETS                                       */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+    #scoreboard,
+    .scoreboard {
+        width: min(390px, 65vw);
+        min-height: 58px;
+    }
+
+    .score-team {
+        padding: 10px 12px;
+    }
+
+    #team1Name,
+    #team2Name,
+    .score-team-name {
+        max-width: 68px;
+        font-size: 0.56rem;
+    }
+
+    #team1Score,
+    #team2Score {
+        font-size: 1.5rem;
+    }
+
+    .score-time {
+        min-width: 64px;
+    }
+
+    .match-statistics {
+        top: 94px;
+        padding: 10px 12px;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE: MÓVIL HORIZONTAL                               */
+/* ========================================================= */
+
+@media (max-width: 760px) and (orientation: landscape) {
+    #scoreboard,
+    .scoreboard {
+        width: min(300px, 58vw);
+        min-height: 46px;
+
+        border-radius: 0 0 9px 9px;
+    }
+
+    .score-team {
+        gap: 6px;
+        padding: 8px 8px;
+    }
+
+    #team1Name,
+    #team2Name,
+    .score-team-name {
+        max-width: 48px;
+        font-size: 0.46rem;
+        letter-spacing: 0.07em;
+    }
+
+    #team1Score,
+    #team2Score {
+        min-width: 18px;
+        font-size: 1.25rem;
+    }
+
+    .score-team-left::before,
+    .score-team-right::after {
+        width: 5px;
+        height: 5px;
+    }
+
+    .score-time {
+        min-width: 50px;
+        padding: 7px 5px;
+    }
+
+    #matchTime,
+.match-time {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 0;
+
+    font-size: 0.68rem;
+}
+
+#matchTime::before,
+.match-time::before {
+    width: 5px;
+    height: 5px;
+
+    margin-right: 5px;
+}
+
+    #matchTime::before,
+    .match-time::before {
+        width: 5px;
+        height: 5px;
+    }
+
+    #exitMatchButton {
+        top: 9px;
+        right: 9px;
+
+        min-width: 58px;
+        min-height: 29px;
+
+        padding: 7px 9px;
+
+        font-size: 0.5rem;
+    }
+
+    .match-statistics {
+        top: 66px;
+        left: 9px;
+
+        gap: 5px;
+        padding: 7px 9px;
+    }
+
+    .match-stat-row {
+        gap: 12px;
+    }
+
+    .match-stat-label {
+        font-size: 0.42rem;
+    }
+
+    .match-stat-value {
+        font-size: 0.48rem;
+    }
+
+    .action-feedback {
+        bottom: 24%;
+    }
+
+    .action-feedback-title {
+        font-size: 0.9rem;
+    }
+
+    .action-feedback-subtitle {
+        font-size: 0.5rem;
+    }
+
+    .power-indicator {
+        width: 80px;
+    }
+
+    .power-indicator-label {
+        font-size: 0.46rem;
+    }
+
+    .power-indicator-track {
+        height: 4px;
+    }
+
+    .controlled-player-indicator {
+        width: 25px;
+        height: 9px;
+    }
+
+    .controlled-player-indicator::after {
+        width: 4px;
+        height: 4px;
+    }
+
+    .possession-indicator {
+        width: 16px;
+        height: 16px;
+        font-size: 0.48rem;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MUY BAJAS                                        */
+/* ========================================================= */
+
+@media (max-height: 520px) and (orientation: landscape) {
+    .match-statistics {
+        display: none;
+    }
+
+    .kickoff-title {
+        font-size: clamp(1.6rem, 5vw, 3rem);
+    }
+}
+
+
+/* ========================================================= */
+/* REDUCCIÓN DE MOVIMIENTO                                    */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .possession-indicator,
+    .action-feedback.visible,
+    .kickoff-message.visible {
+        animation: none;
+    }
+
+    #exitMatchButton {
+        transition: none;
+    }
+}

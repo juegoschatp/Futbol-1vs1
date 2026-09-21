@@ -1,0 +1,1032 @@
+/* ========================================================= */
+/* CONTROLS.CSS                                               */
+/* Controles táctiles optimizados                             */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* CONTENEDOR                                                 */
+/* ========================================================= */
+
+#gameControls {
+    position: absolute;
+    inset: 0;
+
+    z-index: 30;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    touch-action: none;
+
+    /*
+     * Permite que los controles puedan salir
+     * de su mitad de pantalla y superponerse.
+     */
+    overflow: visible;
+}
+
+
+/* ========================================================= */
+/* ZONA DE CADA JUGADOR                                       */
+/* ========================================================= */
+
+.player-controls {
+    position: absolute;
+
+    bottom: 0;
+
+    /*
+     * Cada jugador sigue teniendo su mitad,
+     * pero sus controles pueden salir de ella.
+     */
+    width: 50%;
+    height: 46%;
+
+    display: flex;
+    align-items: flex-end;
+
+    box-sizing: border-box;
+
+    pointer-events: none;
+
+    /*
+     * MUY IMPORTANTE:
+     * permite que los botones sobresalgan
+     * de la zona del jugador.
+     */
+    overflow: visible;
+
+    /*
+     * Evita que los elementos se reduzcan
+     * automáticamente al faltar espacio.
+     */
+    min-width: 0;
+}
+
+
+/* ========================================================= */
+/* JUGADOR 1                                                  */
+/* ========================================================= */
+
+.player1-controls {
+
+    left: 0;
+
+    /*
+     * Movimiento general hacia el centro.
+     */
+    transform: translateX(45px);
+
+    /*
+     * Separación interna.
+     */
+    padding-left: 50px;
+    padding-bottom: clamp(12px, 2.5vh, 26px);
+
+    gap: clamp(18px, 2.8vw, 34px);
+
+    justify-content: flex-start;
+
+    /*
+     * Permite que el bloque sobresalga
+     * de su mitad.
+     */
+    overflow: visible;
+}
+
+
+/* ========================================================= */
+/* JUGADOR 2                                                  */
+/* ========================================================= */
+
+.player2-controls {
+
+    right: 0;
+
+    /*
+     * Movimiento general hacia el centro.
+     * Dirección contraria al jugador 1.
+     */
+    transform: translateX(-45px);
+
+    padding-right: 50px;
+    padding-bottom: clamp(12px, 2.5vh, 26px);
+
+    gap: clamp(18px, 2.8vw, 34px);
+
+    justify-content: flex-start;
+
+    flex-direction: row-reverse;
+
+    overflow: visible;
+}
+
+
+/* ========================================================= */
+/* GRUPO DE DIRECCIÓN                                         */
+/* ========================================================= */
+
+.direction-buttons {
+
+    position: relative;
+
+    width: clamp(112px, 13vw, 150px);
+    height: clamp(100px, 11.5vw, 138px);
+
+    /*
+     * Nunca reducir el grupo.
+     */
+    flex: 0 0 auto;
+
+    pointer-events: none;
+
+    overflow: visible;
+}
+
+
+/* ========================================================= */
+/* FILA IZQUIERDA / DERECHA                                  */
+/* ========================================================= */
+
+.horizontal-direction-buttons {
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: clamp(6px, 0.8vw, 10px);
+
+    pointer-events: none;
+
+    overflow: visible;
+}
+
+
+/* ========================================================= */
+/* BOTONES DE DIRECCIÓN                                       */
+/* ========================================================= */
+
+.direction-button {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: clamp(56px, 6.2vw, 74px);
+    height: clamp(44px, 5vw, 58px);
+
+    /*
+     * Impide que Flexbox los aplaste.
+     */
+    flex: 0 0 auto;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    background: rgba(12, 15, 19, 0.90);
+
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    border-radius: 12px;
+
+    font-family: inherit;
+
+    font-size: clamp(1rem, 1.7vw, 1.35rem);
+
+    font-weight: 900;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 70ms ease,
+        background-color 70ms ease,
+        border-color 70ms ease;
+}
+
+
+/* ========================================================= */
+/* BOTÓN ARRIBA                                               */
+/* ========================================================= */
+
+.direction-up {
+
+    position: absolute;
+
+    left: 50%;
+    top: 0;
+
+    transform: translateX(-50%);
+}
+
+
+/* ========================================================= */
+/* ESTADO PRESIONADO                                          */
+/* ========================================================= */
+
+.direction-button:active {
+
+    transform: scale(0.94);
+
+    background: rgba(255, 255, 255, 0.15);
+
+    border-color: rgba(255, 255, 255, 0.34);
+}
+
+
+/* Mantener centrado el botón superior */
+
+.direction-up:active {
+
+    transform:
+        translateX(-50%)
+        scale(0.94);
+}
+
+
+/* ========================================================= */
+/* BOTÓN PATEAR                                               */
+/* ========================================================= */
+
+.kick-button {
+
+    width: clamp(72px, 7.5vw, 100px);
+    height: clamp(72px, 7.5vw, 100px);
+
+    /*
+     * Nunca reducir el botón.
+     */
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    color: #fff;
+
+    background: rgba(15, 18, 22, 0.94);
+
+    border: 2px solid rgba(255, 255, 255, 0.22);
+
+    border-radius: 50%;
+
+    font-family: inherit;
+
+    font-size: clamp(0.58rem, 0.9vw, 0.76rem);
+
+    font-weight: 900;
+
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 70ms ease,
+        background-color 70ms ease;
+}
+
+
+/* ========================================================= */
+/* COLORES DE PATEAR                                         */
+/* ========================================================= */
+
+.kick-button-left {
+
+    border-color: rgba(117, 201, 232, 0.45);
+}
+
+
+.kick-button-right {
+
+    border-color: rgba(245, 190, 70, 0.45);
+}
+
+
+/* ========================================================= */
+/* PATEAR PRESIONADO                                         */
+/* ========================================================= */
+
+.kick-button:active {
+
+    transform: scale(0.93);
+
+    background: rgba(255, 255, 255, 0.14);
+}
+
+
+/* ========================================================= */
+/* SIN DECORACIONES EXTRA                                    */
+/* ========================================================= */
+
+.kick-button::before,
+.kick-button::after {
+
+    display: none;
+
+    content: none;
+}
+
+
+/* ========================================================= */
+/* TABLET                                                     */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .player1-controls {
+
+        padding-left: 45px;
+
+        gap: 20px;
+
+        /*
+         * Un poco más hacia el centro.
+         */
+        transform: translateX(35px);
+    }
+
+
+    .player2-controls {
+
+        padding-right: 45px;
+
+        gap: 20px;
+
+        transform: translateX(-35px);
+    }
+
+
+    .direction-buttons {
+
+        width: 124px;
+        height: 112px;
+    }
+
+
+    .direction-button {
+
+        width: 62px;
+        height: 48px;
+    }
+
+
+    .kick-button {
+
+        width: 78px;
+        height: 78px;
+    }
+}
+
+
+/* ========================================================= */
+/* MÓVIL HORIZONTAL                                           */
+/* ========================================================= */
+
+@media (
+    max-width: 760px
+) and (
+    orientation: landscape
+) {
+
+    .player-controls {
+
+        height: 49%;
+
+        /*
+         * Permitir que ambos bloques
+         * sobresalgan de su mitad.
+         */
+        overflow: visible;
+    }
+
+
+    .player1-controls {
+
+        /*
+         * Separación interna.
+         */
+        padding-left: 45px;
+
+        padding-bottom: 9px;
+
+        gap: 16px;
+
+        /*
+         * Movimiento adicional hacia el centro.
+         */
+        transform: translateX(35px);
+    }
+
+
+    .player2-controls {
+
+        padding-right: 45px;
+
+        padding-bottom: 9px;
+
+        gap: 16px;
+
+        transform: translateX(-35px);
+    }
+
+
+    .direction-buttons {
+
+        width: 108px;
+        height: 96px;
+
+        overflow: visible;
+    }
+
+
+    .direction-button {
+
+        width: 56px;
+        height: 43px;
+
+        border-radius: 10px;
+
+        font-size: 0.98rem;
+    }
+
+
+    .horizontal-direction-buttons {
+
+        gap: 5px;
+
+        overflow: visible;
+    }
+
+
+    .kick-button {
+
+        width: 66px;
+        height: 66px;
+
+        font-size: 0.54rem;
+
+        letter-spacing: 0.05em;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MUY BAJAS                                       */
+/* ========================================================= */
+
+@media (
+    max-height: 500px
+) and (
+    orientation: landscape
+) {
+
+    .player1-controls {
+
+        padding-left: 40px;
+
+        padding-bottom: 6px;
+
+        gap: 13px;
+
+        transform: translateX(30px);
+    }
+
+
+    .player2-controls {
+
+        padding-right: 40px;
+
+        padding-bottom: 6px;
+
+        gap: 13px;
+
+        transform: translateX(-30px);
+    }
+
+
+    .direction-buttons {
+
+        width: 96px;
+        height: 86px;
+    }
+
+
+    .direction-button {
+
+        width: 50px;
+        height: 38px;
+
+        border-radius: 9px;
+
+        font-size: 0.85rem;
+    }
+
+
+    .horizontal-direction-buttons {
+
+        gap: 4px;
+    }
+
+
+    .kick-button {
+
+        width: 58px;
+        height: 58px;
+
+        font-size: 0.47rem;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS GRANDES                                         */
+/* ========================================================= */
+
+@media (min-width: 1200px) {
+
+    .player1-controls {
+
+        padding-left: 70px;
+
+        padding-bottom: 25px;
+
+        gap: 30px;
+
+        transform: translateX(30px);
+    }
+
+
+    .player2-controls {
+
+        padding-right: 70px;
+
+        padding-bottom: 25px;
+
+        gap: 30px;
+
+        transform: translateX(-30px);
+    }
+
+
+    .direction-buttons {
+
+        width: 150px;
+        height: 138px;
+    }
+
+
+    .direction-button {
+
+        width: 74px;
+        height: 58px;
+
+        border-radius: 13px;
+
+        font-size: 1.35rem;
+    }
+
+
+    .horizontal-direction-buttons {
+
+        gap: 8px;
+    }
+
+
+    .kick-button {
+
+        width: 96px;
+        height: 96px;
+
+        font-size: 0.78rem;
+    }
+}
+
+
+/* ========================================================= */
+/* REDUCIR ANIMACIONES                                        */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .direction-button,
+    .kick-button {
+
+        transition: none;
+    }
+}
+
+
+/* ========================================================= */
+/* MODO JUGADOR VS IA                                        */
+/* ========================================================= */
+
+#gameControls.ai-mode .player2-controls {
+
+    display: none;
+}
+
+
+/* ========================================================= */
+/* JUGADOR 1 OCUPA TODO EL ANCHO                              */
+/* ========================================================= */
+
+#gameControls.ai-mode .player1-controls {
+
+    left: 0;
+
+    width: 100%;
+
+    padding-left: clamp(42px, 6vw, 86px);
+
+    padding-right: clamp(35px, 6vw, 90px);
+
+    gap: 0;
+
+    justify-content: flex-start;
+
+    /*
+     * En IA no desplazamos el bloque.
+     */
+    transform: none;
+}
+
+
+/* ========================================================= */
+/* GRUPO DE MOVIMIENTO MÁS GRANDE                             */
+/* ========================================================= */
+
+#gameControls.ai-mode .player1-controls .direction-buttons {
+
+    width: clamp(140px, 16vw, 190px);
+
+    height: clamp(120px, 14vw, 165px);
+}
+
+
+/* ========================================================= */
+/* SEPARACIÓN ENTRE IZQUIERDA Y DERECHA                       */
+/* ========================================================= */
+
+#gameControls.ai-mode .player1-controls
+.horizontal-direction-buttons {
+
+    gap: clamp(12px, 1.4vw, 22px);
+}
+
+
+/* ========================================================= */
+/* BOTONES DE MOVIMIENTO MÁS GRANDES                          */
+/* ========================================================= */
+
+#gameControls.ai-mode .player1-controls
+.direction-button {
+
+    width: clamp(66px, 7vw, 84px);
+
+    height: clamp(50px, 5.7vw, 66px);
+
+    font-size: clamp(1.05rem, 1.9vw, 1.5rem);
+
+    border-radius: 12px;
+}
+
+
+/* ========================================================= */
+/* BOTÓN ARRIBA DEL MODO IA                                   */
+/* ========================================================= */
+
+#gameControls.ai-mode .player1-controls
+.direction-up {
+
+    left: 50%;
+}
+
+
+/* ========================================================= */
+/* BOTÓN DE PATEAR                                             */
+/* ========================================================= */
+
+#gameControls.ai-mode .player1-controls .kick-button {
+
+    margin-left: auto;
+
+    margin-right: clamp(35px, 7vw, 110px);
+
+    width: clamp(82px, 8.5vw, 112px);
+
+    height: clamp(82px, 8.5vw, 112px);
+
+    font-size: clamp(0.60rem, 1vw, 0.82rem);
+}
+
+
+/* ========================================================= */
+/* MODO IA — TABLET                                           */
+/* ========================================================= */
+
+@media (max-width: 1000px) {
+
+    #gameControls.ai-mode .player1-controls {
+
+        padding-left: 42px;
+
+        padding-right: 42px;
+
+        transform: none;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-buttons {
+
+        width: 150px;
+
+        height: 128px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-button {
+
+        width: 70px;
+
+        height: 53px;
+
+        font-size: 1.15rem;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .horizontal-direction-buttons {
+
+        gap: 12px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .kick-button {
+
+        margin-right: 45px;
+
+        width: 88px;
+
+        height: 88px;
+
+        font-size: 0.65rem;
+    }
+}
+
+
+/* ========================================================= */
+/* MODO IA — MÓVIL HORIZONTAL                                 */
+/* ========================================================= */
+
+@media (
+    max-width: 760px
+) and (
+    orientation: landscape
+) {
+
+    #gameControls.ai-mode .player-controls {
+
+        width: 100%;
+
+        height: 49%;
+
+        overflow: visible;
+    }
+
+
+    #gameControls.ai-mode .player1-controls {
+
+        width: 100%;
+
+        padding-left: 28px;
+
+        padding-right: 24px;
+
+        padding-bottom: 9px;
+
+        gap: 0;
+
+        transform: none;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-buttons {
+
+        width: 126px;
+
+        height: 110px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .horizontal-direction-buttons {
+
+        gap: 9px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-button {
+
+        width: 64px;
+
+        height: 48px;
+
+        border-radius: 10px;
+
+        font-size: 1.05rem;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .kick-button {
+
+        margin-left: auto;
+
+        margin-right: 28px;
+
+        width: 78px;
+
+        height: 78px;
+
+        font-size: 0.57rem;
+
+        letter-spacing: 0.05em;
+    }
+}
+
+
+/* ========================================================= */
+/* MODO IA — PANTALLAS MUY BAJAS                              */
+/* ========================================================= */
+
+@media (
+    max-height: 500px
+) and (
+    orientation: landscape
+) {
+
+    #gameControls.ai-mode .player1-controls {
+
+        padding-left: 25px;
+
+        padding-right: 22px;
+
+        padding-bottom: 6px;
+
+        transform: none;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-buttons {
+
+        width: 116px;
+
+        height: 100px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .horizontal-direction-buttons {
+
+        gap: 8px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-button {
+
+        width: 58px;
+
+        height: 44px;
+
+        border-radius: 9px;
+
+        font-size: 0.94rem;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .kick-button {
+
+        margin-right: 25px;
+
+        width: 70px;
+
+        height: 70px;
+
+        font-size: 0.50rem;
+    }
+}
+
+
+/* ========================================================= */
+/* MODO IA — PANTALLAS GRANDES                                */
+/* ========================================================= */
+
+@media (min-width: 1200px) {
+
+    #gameControls.ai-mode .player1-controls {
+
+        padding-left: 65px;
+
+        padding-right: 65px;
+
+        padding-bottom: 25px;
+
+        transform: none;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-buttons {
+
+        width: 175px;
+
+        height: 155px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .horizontal-direction-buttons {
+
+        gap: 13px;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .direction-button {
+
+        width: 82px;
+
+        height: 63px;
+
+        border-radius: 13px;
+
+        font-size: 1.32rem;
+    }
+
+
+    #gameControls.ai-mode .player1-controls
+    .kick-button {
+
+        margin-right: 75px;
+
+        width: 106px;
+
+        height: 106px;
+
+        font-size: 0.78rem;
+    }
+}

@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+        initial-scale=1.0,
+        maximum-scale=1.0,
+        user-scalable=no,
+        viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#050608">
+
+    <title>Fútbol 1 vs 1</title>
+
+
+    <!-- =========================================================
+         ESTILOS
+         ========================================================= -->
+
+    <link rel="stylesheet" href="CSS/global.css">
+
+    <link rel="stylesheet" href="CSS/intro.css">
+    <link rel="stylesheet" href="CSS/menu.css">
+    <link rel="stylesheet" href="CSS/match-setup.css">
+
+    <link rel="stylesheet" href="CSS/game.css">
+    <link rel="stylesheet" href="CSS/hud.css">
+    <link rel="stylesheet" href="CSS/controls.css">
+
+    <link rel="stylesheet" href="CSS/orientation.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PANTALLA INICIAL
+         =====================================================
+
+         IMPORTANTE:
+
+         Esta pantalla NO reemplaza al menú.
+
+         El menú principal ya está cargado debajo.
+         Esta pantalla simplemente queda por encima.
+
+         intro.png será dividida visualmente en dos mitades
+         mediante CSS:
+
+         - intro-half-left
+         - intro-half-right
+
+         intro.js únicamente se encargará de la interacción
+         y de iniciar la animación de apertura.
+         ===================================================== -->
+
+    <section
+        id="introScreen"
+        class="intro-screen"
+        aria-label="Pantalla inicial"
+    >
+
+
+        <!-- =================================================
+             MITAD IZQUIERDA DE intro.png
+             ================================================= -->
+
+        <div
+            class="intro-half intro-half-left"
+            aria-hidden="true"
+        ></div>
+
+
+
+        <!-- =================================================
+             MITAD DERECHA DE intro.png
+             ================================================= -->
+
+        <div
+            class="intro-half intro-half-right"
+            aria-hidden="true"
+        ></div>
+
+
+
+        <!-- =================================================
+             CAPA OSCURA
+             ================================================= -->
+
+        <div
+            class="intro-dark-overlay"
+            aria-hidden="true"
+        ></div>
+
+
+
+        <!-- =================================================
+             PARTÍCULAS
+             ================================================= -->
+
+        <div
+            id="introParticles"
+            class="intro-particles"
+            aria-hidden="true"
+        ></div>
+
+
+
+        <!-- =================================================
+             LÍNEA CENTRAL
+             ================================================= -->
+
+        <div
+            class="intro-center-line"
+            aria-hidden="true"
+        ></div>
+
+
+
+        <!-- =================================================
+             CONTENIDO CENTRAL
+             ================================================= -->
+
+        <div class="intro-content">
+
+
+            <div class="intro-kicker">
+                ARCADE FOOTBALL
+            </div>
+
+
+            <h1 class="intro-title">
+                TOCA
+            </h1>
+
+
+            <div class="intro-subtitle">
+                PARA JUGAR
+            </div>
+
+
+            <div class="intro-touch">
+                TOCÁ LA PANTALLA
+            </div>
+
+
+            <div class="intro-footer">
+                FÚTBOL 1 VS 1
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================================================
+         APLICACIÓN PRINCIPAL
+         ========================================================= -->
+
+    <main id="app">
+
+
+        <!-- =====================================================
+             PANTALLA 1: MENÚ PRINCIPAL
+             ===================================================== -->
+
+        <section
+            id="mainMenu"
+            class="screen main-menu"
+        >
+
+
+            <!-- =================================================
+                 FONDO DEL MENÚ
+                 ================================================= -->
+
+            <img
+                id="backgroundImage"
+                class="background-image"
+                src="ASSETS/fondo.png"
+                alt=""
+                draggable="false"
+            >
+
+
+
+            <!-- =================================================
+                 CAPAS VISUALES
+                 ================================================= -->
+
+            <div class="menu-dark-overlay"></div>
+
+            <div class="menu-gradient-overlay"></div>
+
+
+
+            <!-- =================================================
+                 CONTENIDO PRINCIPAL
+                 ================================================= -->
+
+            <div class="menu-content">
+
+
+                <!-- =================================================
+                     IDENTIDAD
+                     ================================================= -->
+
+                <header class="game-brand">
+
+                    <div class="brand-line"></div>
+
+                    <h1 class="game-title">
+                        FÚTBOL
+                    </h1>
+
+                    <div class="game-subtitle">
+                        1 VS 1
+                    </div>
+
+                    <div class="brand-line"></div>
+
+                </header>
+
+
+
+                <!-- =================================================
+                     BOTONES PRINCIPALES
+                     ================================================= -->
+
+                <nav
+                    class="main-buttons"
+                    aria-label="Menú principal"
+                >
+
+
+                    <!-- JUGAR -->
+
+                    <button
+                        id="playButton"
+                        class="menu-button menu-button-play primary-button"
+                        type="button"
+                    >
+
+                        <span class="button-icon">
+                            ⚽
+                        </span>
+
+                        <span class="button-content">
+
+                            <span class="button-text">
+                                JUGAR
+                            </span>
+
+                            <span class="button-subtext">
+                                EMPEZAR PARTIDO
+                            </span>
+
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- TUTORIAL -->
+
+                    <button
+                        id="tutorialButton"
+                        class="menu-button menu-button-tutorial"
+                        type="button"
+                    >
+
+                        <span class="button-icon">
+                            ?
+                        </span>
+
+                        <span class="button-content">
+
+                            <span class="button-text">
+                                TUTORIAL
+                            </span>
+
+                            <span class="button-subtext">
+                                APRENDE A JUGAR
+                            </span>
+
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- AJUSTES -->
+
+                    <button
+                        id="settingsButton"
+                        class="menu-button menu-button-settings"
+                        type="button"
+                    >
+
+                        <span class="button-icon">
+                            ⚙
+                        </span>
+
+                        <span class="button-content">
+
+                            <span class="button-text">
+                                AJUSTES
+                            </span>
+
+                            <span class="button-subtext">
+                                CONFIGURACIÓN
+                            </span>
+
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </nav>
+
+
+
+                <!-- =================================================
+                     PIE DEL MENÚ
+                     ================================================= -->
+
+                <footer class="menu-footer">
+
+                    <span>
+                        FÚTBOL 1 VS 1
+                    </span>
+
+                    <span class="footer-separator">
+                        /
+                    </span>
+
+                    <span>
+                        ARCADE
+                    </span>
+
+                </footer>
+
+            </div>
+
+
+
+            <!-- =====================================================
+                 ORIENTACIÓN DEL MENÚ
+                 ===================================================== -->
+
+            <section
+                id="orientationMessage"
+                class="orientation-message"
+                aria-label="Orientación del dispositivo"
+            >
+
+                <div class="orientation-background-grid"></div>
+
+                <div class="orientation-panel">
+
+                    <div class="orientation-brand">
+
+                        <span class="orientation-brand-line"></span>
+
+                        <span>
+                            FÚTBOL 1 VS 1
+                        </span>
+
+                        <span class="orientation-brand-line"></span>
+
+                    </div>
+
+
+                    <div class="orientation-visual">
+
+                        <div class="orientation-circle"></div>
+
+
+                        <div class="orientation-phone">
+
+                            <div class="orientation-phone-camera"></div>
+
+                            <div class="orientation-phone-display">
+
+                                <div class="orientation-display-line"></div>
+
+                                <div class="orientation-display-line short"></div>
+
+                            </div>
+
+                            <div class="orientation-phone-button"></div>
+
+                        </div>
+
+
+                        <div class="orientation-rotate-arrow">
+
+                            <span></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <h2 class="orientation-heading">
+
+                        JUGÁ EN<br>
+
+                        <strong>
+                            HORIZONTAL
+                        </strong>
+
+                    </h2>
+
+
+                    <p class="orientation-description">
+
+                        Este juego está pensado para disfrutarse
+                        en pantalla horizontal. Girá tu dispositivo
+                        para continuar.
+
+                    </p>
+
+
+                    <div class="orientation-status">
+
+                        <span class="orientation-status-dot"></span>
+
+                        <span>
+                            ESPERANDO ORIENTACIÓN
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <!-- =========================================================
+     PANTALLA 2: SELECCIÓN DE EQUIPOS
+     ========================================================= -->
+
+<section
+    id="matchSetupScreen"
+    class="screen match-setup-screen hidden"
+>
+
+    <div class="setup-background"></div>
+    <div class="setup-overlay"></div>
+
+
+    <div class="setup-content">
+
+
+        <!-- =================================================
+             CABECERA
+             ================================================= -->
+
+        <header class="setup-header">
+
+            <button
+                id="backToMenuButton"
+                class="back-button"
+                type="button"
+                aria-label="Volver al menú"
+            >
+
+                <span class="back-icon">
+                    ←
+                </span>
+
+                <span>
+                    VOLVER
+                </span>
+
+            </button>
+
+
+            <div class="setup-title-block">
+
+                <span class="setup-kicker">
+                    ARCADE FOOTBALL
+                </span>
+
+                <h2 class="setup-title">
+                    SELECCIONÁ TU EQUIPO
+                </h2>
+
+                <div class="setup-title-line"></div>
+
+            </div>
+
+
+            <div class="setup-header-code">
+                MATCH
+                <strong>01</strong>
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             SELECCIÓN PRINCIPAL
+             ================================================= -->
+
+        <section
+            class="team-selection-section"
+            aria-label="Selección de equipos"
+        >
+
+            <div class="selection-stage">
+
+
+                <!-- =============================================
+                     JUGADOR 1
+                     ============================================= -->
+
+                <article
+                    id="player1Panel"
+                    class="player-team-panel player1-panel"
+                >
+
+                    <div class="team-card-background"></div>
+
+
+                    <div class="team-card-top">
+
+                        <div class="player-number">
+                            01
+                        </div>
+
+                        <div class="player-side-label">
+                            JUGADOR 1
+                        </div>
+
+                    </div>
+
+
+                    <div class="team-information">
+
+                        <span class="team-selection-label">
+                            SELECCIONÁ
+                        </span>
+
+                        <h3
+                            id="player1TeamName"
+                            class="selected-team-name"
+                        >
+                            ARGENTINA
+                        </h3>
+
+                        <div class="team-accent-line"></div>
+
+                        <span
+                            id="player1PlayerName"
+                            class="selected-player-name"
+                        >
+                            MESSI
+                        </span>
+
+                    </div>
+
+
+                    <div class="player-stage">
+
+                        <div class="player-glow"></div>
+
+                        <div class="player-image-wrap">
+
+                            <img
+                                id="player1PlayerImage"
+                                class="player-image"
+                                data-side="left"
+                                src="ASSETS/jugadores/messiderecha.png"
+                                alt="MESSI"
+                                draggable="false"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="team-bottom-info">
+
+                        <div
+                            id="player1TeamColor"
+                            class="team-color-preview"
+                        ></div>
+
+
+                        <div
+                            id="player1TeamIndex"
+                            class="team-index"
+                        >
+                            01 / 04
+                        </div>
+
+                    </div>
+
+
+                    <div class="team-selector-controls">
+
+                        <button
+                            id="player1Previous"
+                            class="team-arrow-button"
+                            type="button"
+                            aria-label="Equipo anterior jugador 1"
+                        >
+                            ‹
+                        </button>
+
+
+                        <div class="selector-hint">
+                            CAMBIAR
+                        </div>
+
+
+                        <button
+                            id="player1Next"
+                            class="team-arrow-button"
+                            type="button"
+                            aria-label="Siguiente equipo jugador 1"
+                        >
+                            ›
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =============================================
+                     VS CENTRAL
+                     ============================================= -->
+
+                <div class="versus-divider">
+
+                    <div class="versus-line versus-line-left"></div>
+
+                    <div class="versus-badge">
+
+                        <span>
+                            VS
+                        </span>
+
+                    </div>
+
+                    <div class="versus-line versus-line-right"></div>
+
+                </div>
+
+
+
+                <!-- =============================================
+                     JUGADOR 2
+                     ============================================= -->
+
+                <article
+                    id="player2Panel"
+                    class="player-team-panel player2-panel"
+                >
+
+                    <div class="team-card-background"></div>
+
+
+                    <div class="team-card-top">
+
+                        <div class="player-side-label">
+                            JUGADOR 2
+                        </div>
+
+                        <div class="player-number">
+                            02
+                        </div>
+
+                    </div>
+
+
+                    <div class="team-information">
+
+                        <span class="team-selection-label">
+                            SELECCIONÁ
+                        </span>
+
+                        <h3
+                            id="player2TeamName"
+                            class="selected-team-name"
+                        >
+                            FRANCIA
+                        </h3>
+
+                        <div class="team-accent-line"></div>
+
+                        <span
+                            id="player2PlayerName"
+                            class="selected-player-name"
+                        >
+                            MBAPPÉ
+                        </span>
+
+                    </div>
+
+
+                    <div class="player-stage">
+
+                        <div class="player-glow"></div>
+
+                        <div class="player-image-wrap">
+
+                            <img
+                                id="player2PlayerImage"
+                                class="player-image"
+                                data-side="right"
+                                src="ASSETS/jugadores/mbapeizquierda.png"
+                                alt="MBAPPÉ"
+                                draggable="false"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="team-bottom-info">
+
+                        <div
+                            id="player2TeamColor"
+                            class="team-color-preview"
+                        ></div>
+
+
+                        <div
+                            id="player2TeamIndex"
+                            class="team-index"
+                        >
+                            02 / 04
+                        </div>
+
+                    </div>
+
+
+                    <div class="team-selector-controls">
+
+                        <button
+                            id="player2Previous"
+                            class="team-arrow-button"
+                            type="button"
+                            aria-label="Equipo anterior jugador 2"
+                        >
+                            ‹
+                        </button>
+
+
+                        <div class="selector-hint">
+                            CAMBIAR
+                        </div>
+
+
+                        <button
+                            id="player2Next"
+                            class="team-arrow-button"
+                            type="button"
+                            aria-label="Siguiente equipo jugador 2"
+                        >
+                            ›
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CONFIGURACIÓN INFERIOR
+             ================================================= -->
+
+        <section class="setup-options">
+
+
+            <!-- DURACIÓN -->
+
+            <div
+                class="setup-option-group duration-group"
+            >
+
+                <div class="option-heading">
+
+                    <span class="option-number">
+                        01
+                    </span>
+
+                    <span>
+                        DURACIÓN
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="durationOptions"
+                    class="duration-options"
+                >
+
+                    <button
+                        class="duration-button"
+                        data-duration="60"
+                        type="button"
+                    >
+
+                        <strong>
+                            1:00
+                        </strong>
+
+                        <span>
+                            CORTO
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="duration-button selected"
+                        data-duration="120"
+                        type="button"
+                    >
+
+                        <strong>
+                            2:00
+                        </strong>
+
+                        <span>
+                            NORMAL
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="duration-button"
+                        data-duration="180"
+                        type="button"
+                    >
+
+                        <strong>
+                            3:00
+                        </strong>
+
+                        <span>
+                            LARGO
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MODO -->
+
+            <div
+                class="setup-option-group mode-group"
+            >
+
+                <div class="option-heading">
+
+                    <span class="option-number">
+                        02
+                    </span>
+
+                    <span>
+                        MODO
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="gameModeOptions"
+                    class="game-mode-options"
+                >
+
+                    <button
+                        id="playerVsPlayerButton"
+                        class="game-mode-button selected"
+                        data-mode="player-vs-player"
+                        type="button"
+                    >
+
+                        <span class="mode-icon">
+                            VS
+                        </span>
+
+                        <span class="mode-text">
+
+                            <strong>
+                                JUGADOR VS JUGADOR
+                            </strong>
+
+                            <small>
+                                DOS JUGADORES
+                            </small>
+
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        id="playerVsAIButton"
+                        class="game-mode-button"
+                        data-mode="player-vs-ai"
+                        type="button"
+                    >
+
+                        <span class="mode-icon">
+                            CPU
+                        </span>
+
+                        <span class="mode-text">
+
+                            <strong>
+                                JUGADOR VS CPU
+                            </strong>
+
+                            <small>
+                                CONTRA LA COMPUTADORA
+                            </small>
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONFIRMAR -->
+
+            <div class="setup-confirm">
+
+                <div class="setup-summary">
+
+                    <span class="summary-label">
+                        PARTIDO
+                    </span>
+
+                    <span
+                        id="matchSummary"
+                        class="summary-value"
+                    >
+                        ARG VS FRA · 2:00
+                    </span>
+
+                </div>
+
+
+                <button
+                    id="continueToGameButton"
+                    class="continue-button"
+                    type="button"
+                >
+
+                    <span>
+                        JUGAR
+                    </span>
+
+                    <span class="continue-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</section>
+
+
+        <!-- =====================================================
+             PANTALLA 3: PARTIDO
+             ===================================================== -->
+
+        <section
+            id="gameScreen"
+            class="screen game-screen hidden"
+        >
+
+            <canvas id="gameCanvas"></canvas>
+
+
+
+            <!-- =================================================
+                 HUD
+                 ================================================= -->
+
+            <div id="matchInterface">
+
+                <div id="scoreboard">
+
+                    <div class="score-team score-team-left">
+
+                        <span id="team1Name">
+                            ARG
+                        </span>
+
+                        <strong id="team1Score">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="score-time">
+
+                        <span id="matchTime">
+                            02:00
+                        </span>
+
+                    </div>
+
+
+                    <div class="score-team score-team-right">
+
+                        <strong id="team2Score">
+                            0
+                        </strong>
+
+                        <span id="team2Name">
+                            FRA
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="exitMatchButton"
+                    class="exit-match-button"
+                    type="button"
+                >
+                    SALIR
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CONTROLES
+                 ================================================= -->
+
+            <div
+                id="gameControls"
+                class="game-controls"
+            >
+
+
+                <!-- JUGADOR 1 -->
+
+                <div
+                    id="player1Controls"
+                    class="player-controls player1-controls"
+                >
+
+                    <div
+                        id="directionButtons1"
+                        class="direction-buttons"
+                        aria-label="Controles de movimiento jugador 1"
+                    >
+
+                        <button
+                            id="upButton1"
+                            class="direction-button direction-up"
+                            type="button"
+                            aria-label="Saltar jugador 1"
+                        >
+                            ▲
+                        </button>
+
+
+                        <div class="horizontal-direction-buttons">
+
+                            <button
+                                id="leftButton1"
+                                class="direction-button direction-left"
+                                type="button"
+                                aria-label="Mover a la izquierda jugador 1"
+                            >
+                                ◀
+                            </button>
+
+
+                            <button
+                                id="rightButton1"
+                                class="direction-button direction-right"
+                                type="button"
+                                aria-label="Mover a la derecha jugador 1"
+                            >
+                                ▶
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="kickButton1"
+                        class="control-button kick-button kick-button-left"
+                        type="button"
+                        aria-label="Patear con jugador 1"
+                    >
+                        PATEAR
+                    </button>
+
+                </div>
+
+
+
+                <!-- JUGADOR 2 -->
+
+                <div
+                    id="player2Controls"
+                    class="player-controls player2-controls"
+                >
+
+                    <div
+                        id="directionButtons2"
+                        class="direction-buttons"
+                        aria-label="Controles de movimiento jugador 2"
+                    >
+
+                        <button
+                            id="upButton2"
+                            class="direction-button direction-up"
+                            type="button"
+                            aria-label="Saltar jugador 2"
+                        >
+                            ▲
+                        </button>
+
+
+                        <div class="horizontal-direction-buttons">
+
+                            <button
+                                id="leftButton2"
+                                class="direction-button direction-left"
+                                type="button"
+                                aria-label="Mover a la izquierda jugador 2"
+                            >
+                                ◀
+                            </button>
+
+
+                            <button
+                                id="rightButton2"
+                                class="direction-button direction-right"
+                                type="button"
+                                aria-label="Mover a la derecha jugador 2"
+                            >
+                                ▶
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="kickButton2"
+                        class="control-button kick-button kick-button-right"
+                        type="button"
+                        aria-label="Patear con jugador 2"
+                    >
+                        PATEAR
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MENSAJE DE GOL
+                 ================================================= -->
+
+            <div
+                id="goalMessage"
+                class="goal-message"
+            >
+
+                <span id="goalMessageText">
+                    ¡GOL!
+                </span>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PANTALLA FINAL
+                 ================================================= -->
+
+            <div
+                id="matchEndScreen"
+                class="match-end-screen"
+            >
+
+                <div class="match-end-card">
+
+                    <h2>
+                        PARTIDO TERMINADO
+                    </h2>
+
+
+                    <div class="final-score">
+
+                        <span id="finalTeam1Name">
+                            ARG
+                        </span>
+
+                        <strong id="finalScore">
+                            0 - 0
+                        </strong>
+
+                        <span id="finalTeam2Name">
+                            FRA
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        id="playAgainButton"
+                        class="menu-button primary-button"
+                        type="button"
+                    >
+                        VOLVER A JUGAR
+                    </button>
+
+
+                    <button
+                        id="endBackToMenuButton"
+                        class="menu-button"
+                        type="button"
+                    >
+                        VOLVER AL MENÚ
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ORIENTACIÓN GLOBAL
+             ===================================================== -->
+
+        <div
+            id="globalOrientationMessage"
+            class="global-orientation-message"
+        >
+
+            <div class="orientation-icon">
+
+                <div class="phone-shape">
+
+                    <div class="phone-screen"></div>
+
+                </div>
+
+                <div class="rotation-arrow">
+                    ↻
+                </div>
+
+            </div>
+
+
+            <h2>
+                GIRÁ TU DISPOSITIVO
+            </h2>
+
+
+            <p>
+                Este juego está diseñado exclusivamente
+                para jugar en horizontal.
+            </p>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         SCRIPTS
+         ========================================================= -->
+
+    <script src="JS/audio.js"></script>
+
+    <script src="JS/intro.js"></script>
+
+    <script src="JS/menu.js"></script>
+
+    <script src="JS/matchSetup.js"></script>
+
+    <script src="JS/joystick.js"></script>
+
+    <script src="JS/gameMode.js"></script>
+
+    <script src="JS/ai.js"></script>
+    
+    <script src="JS/kickEffect.js"></script>
+
+    <script src="JS/controls.js"></script>
+
+    <script src="JS/stadium.js"></script>
+    
+    <script src="JS/dizziness.js"></script>
+    
+    <script src="JS/stadiumFX.js"></script>
+    
+    <script src="JS/stadiumCrowd.js"></script>
+    
+    <script src="JS/skyTraffic.js"></script>
+
+    <script src="JS/player.js"></script>
+
+    <script src="JS/ball.js"></script>
+
+    <script src="JS/balls/football.js"></script>
+
+    <script src="JS/balls/basketball.js"></script>
+
+    <script src="JS/balls/tennisBall.js"></script>
+
+    <script src="JS/balls/beachBall.js"></script>
+
+    <script src="JS/balls/rugbyBall.js"></script>
+
+    <script src="JS/goal.js"></script>
+
+    <script src="JS/physics.js"></script>
+
+    <script src="JS/scoreboard.js"></script>
+
+    <script src="JS/collisionMap.js"></script>
+
+    <script src="JS/game.js"></script>
+
+</body>
+
+</html>

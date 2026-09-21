@@ -1,0 +1,3063 @@
+/* ========================================================= */
+/* MATCH SETUP                                                */
+/* FÚTBOL 1 VS 1 — SELECCIÓN DE PARTIDO                      */
+/* Diseño horizontal / arcade / profesional                   */
+/* ========================================================= */
+
+
+/* ========================================================= */
+/* VARIABLES                                                  */
+/* ========================================================= */
+
+.match-setup-screen {
+
+    --setup-bg: #050709;
+    --setup-panel: rgba(8, 12, 17, 0.82);
+    --setup-panel-light: rgba(255, 255, 255, 0.045);
+
+    --text-main: #ffffff;
+    --text-soft: rgba(255, 255, 255, 0.62);
+    --text-muted: rgba(255, 255, 255, 0.34);
+
+    --line: rgba(255, 255, 255, 0.10);
+    --line-soft: rgba(255, 255, 255, 0.055);
+
+    --accent: #ffffff;
+    --accent-blue: #65d7ff;
+    --accent-yellow: #ffd21f;
+    --accent-green: #7dffb2;
+    --accent-red: #ff5d62;
+
+    --radius-large: 18px;
+    --radius-medium: 12px;
+    --radius-small: 8px;
+
+    --transition-fast: 0.18s ease;
+    --transition-normal: 0.30s ease;
+    --transition-smooth: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    background:
+        #050709;
+
+    color:
+        var(--text-main);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* ========================================================= */
+/* FONDO                                                      */
+/* ========================================================= */
+
+.setup-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(3, 6, 9, 0.78) 0%,
+            rgba(3, 7, 10, 0.54) 35%,
+            rgba(2, 5, 7, 0.86) 100%
+        ),
+        url("../ASSETS/cancha.png");
+
+    background-size:
+        cover;
+
+    background-position:
+        center center;
+
+    background-repeat:
+        no-repeat;
+
+    filter:
+        saturate(0.85)
+        brightness(0.68);
+
+    transform:
+        scale(1.025);
+
+    pointer-events:
+        none;
+}
+
+
+/* ========================================================= */
+/* CAPA OSCURA                                                 */
+/* ========================================================= */
+
+.setup-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events:
+        none;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(30, 100, 145, 0.10),
+            transparent 38%
+        ),
+
+        radial-gradient(
+            circle at 18% 50%,
+            rgba(255, 205, 40, 0.07),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 82% 50%,
+            rgba(70, 190, 255, 0.07),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.28),
+            transparent 32%,
+            transparent 68%,
+            rgba(0, 0, 0, 0.28)
+        );
+}
+
+
+/* ========================================================= */
+/* CONTENIDO PRINCIPAL                                        */
+/* ========================================================= */
+
+.setup-content {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 1700px;
+
+    margin: 0 auto;
+
+    padding:
+        clamp(14px, 2vh, 24px)
+        clamp(20px, 4vw, 70px)
+        clamp(12px, 2vh, 22px);
+
+    display: grid;
+
+    grid-template-rows:
+        auto
+        minmax(0, 1fr)
+        auto;
+
+    gap:
+        clamp(8px, 1.3vh, 15px);
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================================= */
+/* CABECERA                                                    */
+/* ========================================================= */
+
+.setup-header {
+
+    position: relative;
+
+    min-height:
+        clamp(42px, 7vh, 68px);
+
+    display: grid;
+
+    grid-template-columns:
+        150px
+        1fr
+        150px;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-shrink: 0;
+}
+
+
+/* ========================================================= */
+/* BOTÓN VOLVER                                                */
+/* ========================================================= */
+
+.back-button {
+
+    justify-self: start;
+
+    height:
+        clamp(36px, 5vh, 46px);
+
+    min-width:
+        clamp(100px, 9vw, 132px);
+
+    padding:
+        0 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.11);
+
+    border-radius:
+        8px;
+
+    background:
+        rgba(5, 8, 11, 0.62);
+
+    color:
+        rgba(255, 255, 255, 0.72);
+
+    font-size:
+        clamp(0.55rem, 0.72vw, 0.68rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.12em;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+}
+
+
+.back-button:hover {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.075);
+
+    border-color:
+        rgba(255, 255, 255, 0.28);
+
+    transform:
+        translateX(-2px);
+}
+
+
+.back-button:active {
+
+    transform:
+        scale(0.96);
+}
+
+
+.back-icon {
+
+    font-size:
+        1.1rem;
+
+    line-height:
+        1;
+
+    transition:
+        transform var(--transition-fast);
+}
+
+
+.back-button:hover .back-icon {
+
+    transform:
+        translateX(-3px);
+}
+
+
+/* ========================================================= */
+/* TÍTULO                                                      */
+/* ========================================================= */
+
+.setup-title-block {
+
+    min-width: 0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+}
+
+
+.setup-kicker {
+
+    margin-bottom:
+        3px;
+
+    color:
+        rgba(255, 255, 255, 0.38);
+
+    font-size:
+        clamp(0.40rem, 0.55vw, 0.54rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.35em;
+}
+
+
+.setup-title {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(1.35rem, 2.7vw, 2.5rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        -0.035em;
+
+    line-height:
+        0.95;
+
+    text-transform:
+        uppercase;
+
+    text-shadow:
+        0 5px 28px rgba(0, 0, 0, 0.45);
+}
+
+
+.setup-title-line {
+
+    width:
+        clamp(50px, 6vw, 90px);
+
+    height:
+        2px;
+
+    margin-top:
+        8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.78),
+            transparent
+        );
+}
+
+
+/* ========================================================= */
+/* CÓDIGO MATCH                                                */
+/* ========================================================= */
+
+.setup-header-code {
+
+    justify-self:
+        end;
+
+    color:
+        rgba(255, 255, 255, 0.28);
+
+    font-size:
+        clamp(0.42rem, 0.52vw, 0.52rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.20em;
+}
+
+
+.setup-header-code strong {
+
+    margin-left:
+        7px;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+}
+
+
+/* ========================================================= */
+/* SECCIÓN DE EQUIPOS                                          */
+/* ========================================================= */
+
+.team-selection-section {
+
+    min-height:
+        0;
+
+    width:
+        100%;
+}
+
+
+.selection-stage {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    min-height:
+        0;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        clamp(55px, 7vw, 100px)
+        minmax(0, 1fr);
+
+    align-items:
+        stretch;
+
+    gap:
+        clamp(8px, 1.4vw, 22px);
+}
+
+
+/* ========================================================= */
+/* TARJETAS DE EQUIPO                                         */
+/* ========================================================= */
+
+.player-team-panel {
+
+    --team-primary: #75c9e8;
+    --team-secondary: #ffffff;
+
+    position:
+        relative;
+
+    min-width:
+        0;
+
+    min-height:
+        0;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius:
+        var(--radius-large);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.065),
+            rgba(5, 9, 13, 0.80)
+        );
+
+    box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    isolation:
+        isolate;
+
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+}
+
+
+.player-team-panel::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        -1;
+
+    background:
+        radial-gradient(
+            circle at 50% 70%,
+            color-mix(
+                in srgb,
+                var(--team-primary) 15%,
+                transparent
+            ),
+            transparent 55%
+        );
+
+    opacity:
+        0.85;
+
+    pointer-events:
+        none;
+}
+
+
+.player-team-panel::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        8%;
+
+    right:
+        8%;
+
+    bottom:
+        0;
+
+    height:
+        2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--team-primary),
+            transparent
+        );
+
+    box-shadow:
+        0 0 18px
+        color-mix(
+            in srgb,
+            var(--team-primary) 65%,
+            transparent
+        );
+
+    opacity:
+        0.75;
+
+    pointer-events:
+        none;
+}
+
+
+/* ========================================================= */
+/* FONDO DE TARJETA                                           */
+/* ========================================================= */
+
+.team-card-background {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        0;
+
+    pointer-events:
+        none;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.12),
+            transparent 30%,
+            rgba(0, 0, 0, 0.38)
+        ),
+
+        radial-gradient(
+            circle at 50% 78%,
+            color-mix(
+                in srgb,
+                var(--team-primary) 13%,
+                transparent
+            ),
+            transparent 58%
+        );
+}
+
+
+/* ========================================================= */
+/* CABECERA DE TARJETA                                        */
+/* ========================================================= */
+
+.team-card-top {
+
+    position:
+        absolute;
+
+    top:
+        14px;
+
+    left:
+        16px;
+
+    right:
+        16px;
+
+    z-index:
+        8;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+}
+
+
+.player-number {
+
+    color:
+        rgba(255, 255, 255, 0.24);
+
+    font-size:
+        clamp(0.55rem, 0.7vw, 0.7rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        0.16em;
+}
+
+
+.player-side-label {
+
+    color:
+        var(--team-primary);
+
+    font-size:
+        clamp(0.48rem, 0.62vw, 0.60rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        0.16em;
+
+    text-transform:
+        uppercase;
+
+    text-shadow:
+        0 0 14px
+        color-mix(
+            in srgb,
+            var(--team-primary) 45%,
+            transparent
+        );
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN DEL EQUIPO                                     */
+/* ========================================================= */
+
+.team-information {
+
+    position:
+        absolute;
+
+    top:
+        clamp(48px, 7vh, 70px);
+
+    left:
+        clamp(20px, 2.2vw, 34px);
+
+    z-index:
+        7;
+
+    max-width:
+        58%;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        flex-start;
+}
+
+
+.team-selection-label {
+
+    margin-bottom:
+        4px;
+
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size:
+        clamp(0.42rem, 0.55vw, 0.54rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.20em;
+}
+
+
+.selected-team-name {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(1.45rem, 3vw, 3.1rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        -0.045em;
+
+    line-height:
+        0.90;
+
+    text-transform:
+        uppercase;
+
+    text-shadow:
+        0 5px 22px rgba(0, 0, 0, 0.48);
+}
+
+
+.team-accent-line {
+
+    width:
+        clamp(42px, 5vw, 72px);
+
+    height:
+        3px;
+
+    margin-top:
+        7px;
+
+    background:
+        var(--team-primary);
+
+    box-shadow:
+        0 0 16px
+        color-mix(
+            in srgb,
+            var(--team-primary) 60%,
+            transparent
+        );
+
+    border-radius:
+        10px;
+}
+
+
+.selected-player-name {
+
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    color:
+        rgba(255, 255, 255, 0.70);
+
+    font-size:
+        clamp(0.50rem, 0.72vw, 0.72rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.20em;
+}
+
+
+/* ========================================================= */
+/* ESCENARIO DEL PERSONAJE                                    */
+/* ========================================================= */
+
+.player-stage {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        3;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        center;
+
+    pointer-events:
+        none;
+}
+
+
+.player-glow {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        2%;
+
+    width:
+        clamp(150px, 27vw, 390px);
+
+    aspect-ratio:
+        1;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            color-mix(
+                in srgb,
+                var(--team-primary) 30%,
+                transparent
+            ),
+            transparent 67%
+        );
+
+    filter:
+        blur(12px);
+
+    opacity:
+        0.72;
+
+    animation:
+        playerGlowPulse 3.4s ease-in-out infinite;
+}
+
+
+.player-image-wrap {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        72%;
+
+    height:
+        91%;
+
+    max-width:
+        430px;
+
+    min-width:
+        150px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        center;
+
+    transform:
+        translateY(4%);
+}
+
+
+.player-image {
+
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        contain;
+
+    object-position:
+        center bottom;
+
+    filter:
+        drop-shadow(
+            0 18px 18px rgba(0, 0, 0, 0.46)
+        );
+
+    user-select:
+        none;
+
+    -webkit-user-drag:
+        none;
+
+    transform-origin:
+        center bottom;
+
+    opacity:
+        1;
+
+    visibility:
+        visible;
+
+    transition:
+        filter var(--transition-normal);
+}
+
+
+/* ========================================================= */
+/* ANIMACIÓN DE CAMBIO DE PERSONAJE                            */
+/* ========================================================= */
+
+.player-image-changing {
+
+    animation:
+        playerImageExit 0.125s ease forwards;
+}
+
+
+.player-entering .player-image {
+
+    animation:
+        playerImageEnter 0.38s cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        ) forwards;
+}
+
+
+.player-changing-left .player-image {
+
+    animation:
+        playerSlideLeft 0.38s cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        ) forwards;
+}
+
+
+.player-changing-right .player-image {
+
+    animation:
+        playerSlideRight 0.38s cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        ) forwards;
+}
+
+
+@keyframes playerImageExit {
+
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+}
+
+
+@keyframes playerImageEnter {
+
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.94);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+@keyframes playerSlideLeft {
+
+    0% {
+        opacity: 0;
+        transform: translateX(-28px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+
+@keyframes playerSlideRight {
+
+    0% {
+        opacity: 0;
+        transform: translateX(28px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+
+@keyframes playerGlowPulse {
+
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: translateX(-50%) scale(0.94);
+    }
+
+    50% {
+        opacity: 0.78;
+        transform: translateX(-50%) scale(1.04);
+    }
+}
+
+
+/* ========================================================= */
+/* INFORMACIÓN INFERIOR DE TARJETA                             */
+/* ========================================================= */
+
+.team-bottom-info {
+
+    position:
+        absolute;
+
+    left:
+        16px;
+
+    bottom:
+        14px;
+
+    z-index:
+        8;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+}
+
+
+.team-color-preview {
+
+    width:
+        clamp(32px, 3vw, 52px);
+
+    height:
+        4px;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--team-primary);
+
+    box-shadow:
+        0 0 14px
+        color-mix(
+            in srgb,
+            var(--team-primary) 70%,
+            transparent
+        );
+}
+
+
+.team-index {
+
+    color:
+        rgba(255, 255, 255, 0.35);
+
+    font-size:
+        clamp(0.42rem, 0.52vw, 0.52rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.14em;
+}
+
+
+/* ========================================================= */
+/* CONTROLES DE CAMBIO DE EQUIPO                               */
+/* ========================================================= */
+
+.team-selector-controls {
+
+    position:
+        absolute;
+
+    right:
+        16px;
+
+    bottom:
+        11px;
+
+    z-index:
+        10;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+}
+
+
+.team-arrow-button {
+
+    width:
+        clamp(34px, 3vw, 48px);
+
+    height:
+        clamp(34px, 3vw, 48px);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(0, 0, 0, 0.34);
+
+    color:
+        rgba(255, 255, 255, 0.82);
+
+    font-size:
+        clamp(1rem, 1.5vw, 1.35rem);
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+
+.team-arrow-button:hover {
+
+    background:
+        var(--team-primary);
+
+    color:
+        #050709;
+
+    border-color:
+        var(--team-primary);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 18px
+        color-mix(
+            in srgb,
+            var(--team-primary) 30%,
+            transparent
+        );
+}
+
+
+.team-arrow-button:active {
+
+    transform:
+        scale(0.91);
+}
+
+
+.selector-hint {
+
+    color:
+        rgba(255, 255, 255, 0.24);
+
+    font-size:
+        clamp(0.38rem, 0.48vw, 0.48rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.14em;
+}
+
+
+/* ========================================================= */
+/* VS CENTRAL                                                  */
+/* ========================================================= */
+
+.versus-divider {
+
+    position:
+        relative;
+
+    z-index:
+        12;
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        12px;
+}
+
+
+.versus-line {
+
+    width:
+        1px;
+
+    flex:
+        1;
+
+    min-height:
+        24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255, 255, 255, 0.18),
+            transparent
+        );
+}
+
+
+.versus-badge {
+
+    width:
+        clamp(46px, 4.5vw, 68px);
+
+    height:
+        clamp(46px, 4.5vw, 68px);
+
+    flex:
+        0 0 auto;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.20);
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(5, 8, 11, 0.86);
+
+    box-shadow:
+        0 0 0 7px rgba(255, 255, 255, 0.018),
+        0 12px 28px rgba(0, 0, 0, 0.35);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+}
+
+
+.versus-badge span {
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(0.58rem, 0.75vw, 0.72rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        0.05em;
+}
+
+
+/* ========================================================= */
+/* CONFIGURACIÓN INFERIOR                                      */
+/* ========================================================= */
+
+.setup-options {
+
+    position:
+        relative;
+
+    z-index:
+        20;
+
+    width:
+        100%;
+
+    min-width:
+        0;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(190px, 0.78fr)
+        minmax(390px, 1.55fr)
+        minmax(270px, 0.95fr);
+
+    align-items:
+        end;
+
+    gap:
+        clamp(12px, 1.5vw, 28px);
+
+    padding:
+        10px 0 0;
+}
+
+
+/* ========================================================= */
+/* GRUPOS DE OPCIONES                                          */
+/* ========================================================= */
+
+.setup-option-group {
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+}
+
+
+.option-heading {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    color:
+        rgba(255, 255, 255, 0.48);
+
+    font-size:
+        clamp(0.45rem, 0.56vw, 0.56rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.18em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.option-number {
+
+    color:
+        rgba(255, 255, 255, 0.28);
+
+    font-size:
+        0.90em;
+}
+
+
+/* ========================================================= */
+/* DURACIÓN                                                    */
+/* ========================================================= */
+
+.duration-options {
+
+    width:
+        100%;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:
+        7px;
+}
+
+
+.duration-button {
+
+    min-width:
+        0;
+
+    min-height:
+        clamp(48px, 6vh, 62px);
+
+    padding:
+        7px 12px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        3px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color:
+        rgba(255, 255, 255, 0.50);
+
+    cursor:
+        pointer;
+
+    transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+}
+
+
+.duration-button strong {
+
+    color:
+        inherit;
+
+    font-size:
+        clamp(0.82rem, 1.15vw, 1.08rem);
+
+    font-weight:
+        950;
+
+    line-height:
+        1;
+}
+
+
+.duration-button span {
+
+    color:
+        rgba(255, 255, 255, 0.34);
+
+    font-size:
+        clamp(0.36rem, 0.48vw, 0.48rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.13em;
+}
+
+
+.duration-button:hover {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.075);
+
+    border-color:
+        rgba(255, 255, 255, 0.24);
+
+    transform:
+        translateY(-2px);
+}
+
+
+.duration-button:active {
+
+    transform:
+        scale(0.96);
+}
+
+
+.duration-button.selected {
+
+    color:
+        #050709;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #dce5eb
+        );
+
+    border-color:
+        #ffffff;
+
+    box-shadow:
+        0 7px 24px rgba(255, 255, 255, 0.13);
+}
+
+
+.duration-button.selected span {
+
+    color:
+        rgba(5, 7, 9, 0.55);
+}
+
+
+/* ========================================================= */
+/* MODO DE JUEGO                                               */
+/* ========================================================= */
+
+.mode-group {
+
+    justify-self:
+        center;
+
+    width:
+        100%;
+
+    max-width:
+        620px;
+}
+
+
+.game-mode-options {
+
+    width:
+        100%;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        9px;
+}
+
+
+.game-mode-button {
+
+    position:
+        relative;
+
+    min-width:
+        0;
+
+    min-height:
+        clamp(68px, 8vh, 88px);
+
+    padding:
+        12px 16px;
+
+    overflow:
+        hidden;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        center;
+
+    gap:
+        7px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color:
+        rgba(255, 255, 255, 0.58);
+
+    cursor:
+        pointer;
+
+    text-align:
+        left;
+
+    transition:
+        transform var(--transition-fast),
+        background var(--transition-normal),
+        border-color var(--transition-normal),
+        color var(--transition-normal),
+        box-shadow var(--transition-normal);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+}
+
+
+/* Brillo interno */
+
+.game-mode-button::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.08),
+            transparent 55%
+        );
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity var(--transition-fast);
+}
+
+
+/* Línea superior */
+
+.game-mode-button::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        12%;
+
+    right:
+        12%;
+
+    height:
+        3px;
+
+    border-radius:
+        0 0 5px 5px;
+
+    opacity:
+        0;
+
+    transition:
+        opacity var(--transition-fast);
+}
+
+
+/* ========================================================= */
+/* MODO PVP                                                    */
+/* ========================================================= */
+
+.game-mode-button[data-mode="player-vs-player"]::after {
+
+    background:
+        var(--accent-blue);
+
+    box-shadow:
+        0 0 18px rgba(101, 215, 255, 0.65);
+}
+
+
+.game-mode-button[data-mode="player-vs-player"].selected {
+
+    border-color:
+        rgba(101, 215, 255, 0.60);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(101, 215, 255, 0.16),
+            rgba(101, 215, 255, 0.035)
+        );
+
+    box-shadow:
+        0 0 0 1px rgba(101, 215, 255, 0.06),
+        0 10px 28px rgba(0, 0, 0, 0.24);
+}
+
+
+.game-mode-button[data-mode="player-vs-player"].selected
+.game-mode-description {
+
+    color:
+        rgba(101, 215, 255, 0.90);
+}
+
+
+/* ========================================================= */
+/* MODO CPU                                                    */
+/* ========================================================= */
+
+.game-mode-button[data-mode="player-vs-ai"]::after {
+
+    background:
+        var(--accent-yellow);
+
+    box-shadow:
+        0 0 18px rgba(255, 210, 31, 0.60);
+}
+
+
+.game-mode-button[data-mode="player-vs-ai"].selected {
+
+    border-color:
+        rgba(255, 210, 31, 0.62);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 210, 31, 0.16),
+            rgba(255, 210, 31, 0.035)
+        );
+
+    box-shadow:
+        0 0 0 1px rgba(255, 210, 31, 0.06),
+        0 10px 28px rgba(0, 0, 0, 0.24);
+}
+
+
+.game-mode-button[data-mode="player-vs-ai"].selected
+.game-mode-description {
+
+    color:
+        rgba(255, 220, 90, 0.92);
+}
+
+
+/* ========================================================= */
+/* HOVER MODO                                                  */
+/* ========================================================= */
+
+.game-mode-button:hover {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.075);
+
+    border-color:
+        rgba(255, 255, 255, 0.25);
+
+    transform:
+        translateY(-2px);
+}
+
+
+.game-mode-button:hover::before {
+
+    opacity:
+        1;
+}
+
+
+.game-mode-button.selected::after {
+
+    opacity:
+        1;
+}
+
+
+.game-mode-button:active {
+
+    transform:
+        scale(0.975);
+}
+
+
+/* ========================================================= */
+/* TÍTULO Y DESCRIPCIÓN DEL MODO                              */
+/* ========================================================= */
+
+.game-mode-title {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(0.64rem, 0.86vw, 0.86rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        0.075em;
+
+    line-height:
+        1;
+
+    text-transform:
+        uppercase;
+}
+
+
+.game-mode-description {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    color:
+        rgba(255, 255, 255, 0.27);
+
+    font-size:
+        clamp(0.43rem, 0.55vw, 0.56rem);
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.11em;
+
+    line-height:
+        1;
+
+    transition:
+        color var(--transition-normal);
+}
+
+
+/* ========================================================= */
+/* CONFIRMAR / JUGAR                                           */
+/* ========================================================= */
+
+.setup-confirm {
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        stretch;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        7px;
+}
+
+
+.setup-summary {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        center;
+
+    gap:
+        3px;
+
+    min-width:
+        0;
+
+    padding-right:
+        5px;
+}
+
+
+.summary-label {
+
+    color:
+        rgba(255, 255, 255, 0.28);
+
+    font-size:
+        clamp(0.40rem, 0.50vw, 0.50rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.18em;
+}
+
+
+.summary-value {
+
+    color:
+        rgba(255, 255, 255, 0.70);
+
+    font-size:
+        clamp(0.48rem, 0.65vw, 0.65rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.11em;
+
+    white-space:
+        nowrap;
+}
+
+
+/* ========================================================= */
+/* BOTÓN JUGAR — GRANDE                                       */
+/* ========================================================= */
+
+.continue-button {
+
+    position:
+        relative;
+
+    min-width:
+        100%;
+
+    min-height:
+        clamp(76px, 10vh, 105px);
+
+    padding:
+        0 clamp(24px, 2.5vw, 40px);
+
+    overflow:
+        hidden;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        18px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.92);
+
+    border-radius:
+        15px;
+
+    background:
+        #ffffff;
+
+    color:
+        #050709;
+
+    font-size:
+        clamp(1.15rem, 1.8vw, 1.8rem);
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        0.04em;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.34);
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.continue-button::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 25%,
+            rgba(255, 255, 255, 0.90) 50%,
+            transparent 75%
+        );
+
+    transform:
+        translateX(-120%);
+
+    transition:
+        transform 0.65s ease;
+
+    pointer-events:
+        none;
+}
+
+
+.continue-button:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.015);
+
+    background:
+        #f5f8fa;
+
+    box-shadow:
+        0 16px 48px rgba(255, 255, 255, 0.13),
+        0 14px 42px rgba(0, 0, 0, 0.34);
+}
+
+
+.continue-button:hover::before {
+
+    transform:
+        translateX(120%);
+}
+
+
+.continue-button:active {
+
+    transform:
+        scale(0.97);
+}
+
+
+.continue-arrow {
+
+    font-size:
+        clamp(1.65rem, 2.5vw, 2.5rem);
+
+    line-height:
+        1;
+
+    transition:
+        transform var(--transition-fast);
+}
+
+
+.continue-button:hover .continue-arrow {
+
+    transform:
+        translateX(7px);
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE — TABLET HORIZONTAL                             */
+/* ========================================================= */
+
+@media
+(max-width: 1050px)
+and (orientation: landscape) {
+
+    .setup-content {
+
+        padding-left:
+            24px;
+
+        padding-right:
+            24px;
+    }
+
+
+    .setup-header {
+
+        grid-template-columns:
+            125px
+            1fr
+            125px;
+    }
+
+
+    .selection-stage {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            54px
+            minmax(0, 1fr);
+
+        gap:
+            10px;
+    }
+
+
+    .selected-team-name {
+
+        font-size:
+            clamp(1.25rem, 3.4vw, 2.2rem);
+    }
+
+
+    .player-image-wrap {
+
+        width:
+            76%;
+
+        height:
+            88%;
+    }
+
+
+    .setup-options {
+
+        grid-template-columns:
+            minmax(170px, 0.75fr)
+            minmax(330px, 1.4fr)
+            minmax(220px, 0.85fr);
+
+        gap:
+            12px;
+    }
+
+
+    .game-mode-title {
+
+        font-size:
+            0.64rem;
+    }
+
+
+    .game-mode-description {
+
+        font-size:
+            0.40rem;
+    }
+}
+
+
+/* ========================================================= */
+/* MÓVIL HORIZONTAL                                           */
+/* ========================================================= */
+
+@media
+(max-width: 760px)
+and (orientation: landscape) {
+
+    .setup-content {
+
+        padding:
+            8px
+            14px
+            max(
+                8px,
+                env(safe-area-inset-bottom)
+            );
+
+        gap:
+            5px;
+    }
+
+
+    .setup-header {
+
+        min-height:
+            34px;
+
+        grid-template-columns:
+            90px
+            1fr
+            80px;
+
+        gap:
+            8px;
+    }
+
+
+    .back-button {
+
+        min-width:
+            78px;
+
+        height:
+            30px;
+
+        padding:
+            0 8px;
+
+        gap:
+            5px;
+
+        font-size:
+            0.46rem;
+    }
+
+
+    .back-icon {
+
+        font-size:
+            0.9rem;
+    }
+
+
+    .setup-kicker {
+
+        font-size:
+            0.38rem;
+
+        letter-spacing:
+            0.25em;
+    }
+
+
+    .setup-title {
+
+        font-size:
+            clamp(0.95rem, 3.2vw, 1.55rem);
+    }
+
+
+    .setup-title-line {
+
+        margin-top:
+            4px;
+
+        width:
+            45px;
+    }
+
+
+    .setup-header-code {
+
+        font-size:
+            0.38rem;
+    }
+
+
+    .selection-stage {
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            40px
+            minmax(0, 1fr);
+
+        gap:
+            5px;
+    }
+
+
+    .player-team-panel {
+
+        border-radius:
+            11px;
+    }
+
+
+    .team-card-top {
+
+        top:
+            8px;
+
+        left:
+            9px;
+
+        right:
+            9px;
+    }
+
+
+    .player-number {
+
+        font-size:
+            0.42rem;
+    }
+
+
+    .player-side-label {
+
+        font-size:
+            0.40rem;
+    }
+
+
+    .team-information {
+
+        top:
+            31px;
+
+        left:
+            12px;
+    }
+
+
+    .team-selection-label {
+
+        font-size:
+            0.34rem;
+
+        margin-bottom:
+            2px;
+    }
+
+
+    .selected-team-name {
+
+        font-size:
+            clamp(0.90rem, 3vw, 1.35rem);
+    }
+
+
+    .team-accent-line {
+
+        width:
+            35px;
+
+        height:
+            2px;
+
+        margin-top:
+            4px;
+    }
+
+
+    .selected-player-name {
+
+        margin-top:
+            4px;
+
+        font-size:
+            0.40rem;
+    }
+
+
+    .player-image-wrap {
+
+        width:
+            82%;
+
+        height:
+            91%;
+
+        min-width:
+            90px;
+    }
+
+
+    .player-glow {
+
+        width:
+            150px;
+    }
+
+
+    .team-bottom-info {
+
+        left:
+            9px;
+
+        bottom:
+            8px;
+
+        gap:
+            5px;
+    }
+
+
+    .team-color-preview {
+
+        width:
+            28px;
+
+        height:
+            3px;
+    }
+
+
+    .team-index {
+
+        font-size:
+            0.35rem;
+    }
+
+
+    .team-selector-controls {
+
+        right:
+            8px;
+
+        bottom:
+            6px;
+
+        gap:
+            4px;
+    }
+
+
+    .team-arrow-button {
+
+        width:
+            27px;
+
+        height:
+            27px;
+
+        border-radius:
+            6px;
+
+        font-size:
+            0.95rem;
+    }
+
+
+    .selector-hint {
+
+        display:
+            none;
+    }
+
+
+    .versus-divider {
+
+        gap:
+            5px;
+    }
+
+
+    .versus-line {
+
+        min-height:
+            15px;
+    }
+
+
+    .versus-badge {
+
+        width:
+            38px;
+
+        height:
+            38px;
+    }
+
+
+    .versus-badge span {
+
+        font-size:
+            0.44rem;
+    }
+
+
+    .setup-options {
+
+        grid-template-columns:
+            0.72fr
+            1.55fr
+            0.90fr;
+
+        gap:
+            7px;
+
+        padding-top:
+            2px;
+    }
+
+
+    .setup-option-group {
+
+        gap:
+            4px;
+    }
+
+
+    .option-heading {
+
+        font-size:
+            0.38rem;
+
+        gap:
+            5px;
+    }
+
+
+    .duration-options {
+
+        gap:
+            4px;
+    }
+
+
+    .duration-button {
+
+        min-height:
+            40px;
+
+        padding:
+            4px;
+    }
+
+
+    .duration-button strong {
+
+        font-size:
+            0.66rem;
+    }
+
+
+    .duration-button span {
+
+        font-size:
+            0.31rem;
+    }
+
+
+    .game-mode-options {
+
+        gap:
+            4px;
+    }
+
+
+    .game-mode-button {
+
+        min-height:
+            52px;
+
+        padding:
+            7px 8px;
+
+        border-radius:
+            8px;
+
+        gap:
+            4px;
+    }
+
+
+    .game-mode-title {
+
+        font-size:
+            0.46rem;
+
+        letter-spacing:
+            0.04em;
+    }
+
+
+    .game-mode-description {
+
+        font-size:
+            0.31rem;
+
+        letter-spacing:
+            0.06em;
+    }
+
+
+    .setup-confirm {
+
+        gap:
+            4px;
+    }
+
+
+    .summary-label {
+
+        font-size:
+            0.30rem;
+    }
+
+
+    .summary-value {
+
+        font-size:
+            0.34rem;
+    }
+
+
+    .continue-button {
+
+        min-height:
+            56px;
+
+        padding:
+            0 14px;
+
+        border-radius:
+            9px;
+
+        font-size:
+            0.88rem;
+    }
+
+
+    .continue-arrow {
+
+        font-size:
+            1.25rem;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MUY BAJAS                                        */
+/* ========================================================= */
+
+@media
+(max-height: 430px)
+and (orientation: landscape) {
+
+    .setup-content {
+
+        padding-top:
+            5px;
+
+        padding-bottom:
+            5px;
+
+        gap:
+            3px;
+    }
+
+
+    .setup-header {
+
+        min-height:
+            29px;
+    }
+
+
+    .setup-title {
+
+        font-size:
+            clamp(0.90rem, 2.8vw, 1.35rem);
+    }
+
+
+    .setup-kicker {
+
+        display:
+            none;
+    }
+
+
+    .setup-title-line {
+
+        display:
+            none;
+    }
+
+
+    .team-information {
+
+        top:
+            28px;
+    }
+
+
+    .selected-team-name {
+
+        font-size:
+            clamp(0.82rem, 3vw, 1.20rem);
+    }
+
+
+    .selected-player-name {
+
+        font-size:
+            0.34rem;
+    }
+
+
+    .player-image-wrap {
+
+        height:
+            88%;
+    }
+
+
+    .setup-options {
+
+        gap:
+            5px;
+    }
+
+
+    .duration-button {
+
+        min-height:
+            34px;
+    }
+
+
+    .game-mode-button {
+
+        min-height:
+            45px;
+
+        padding:
+            5px 7px;
+    }
+
+
+    .continue-button {
+
+        min-height:
+            48px;
+
+        font-size:
+            0.75rem;
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MUY ANCHAS                                       */
+/* ========================================================= */
+
+@media (min-width: 1500px) {
+
+    .setup-content {
+
+        max-width:
+            1750px;
+    }
+
+
+    .player-image-wrap {
+
+        max-width:
+            470px;
+    }
+
+
+    .selected-team-name {
+
+        font-size:
+            clamp(2rem, 3vw, 3.25rem);
+    }
+}
+
+
+/* ========================================================= */
+/* PANTALLAS MUY ALTAS                                         */
+/* ========================================================= */
+
+@media
+(min-height: 850px)
+and (orientation: landscape) {
+
+    .setup-content {
+
+        padding-top:
+            20px;
+
+        padding-bottom:
+            18px;
+    }
+
+
+    .selection-stage {
+
+        min-height:
+            370px;
+    }
+
+
+    .player-image-wrap {
+
+        height:
+            94%;
+    }
+}
+
+
+/* ========================================================= */
+/* ACCESIBILIDAD / REDUCIR MOVIMIENTO                         */
+/* ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .match-setup-screen *,
+    .match-setup-screen *::before,
+    .match-setup-screen *::after {
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
+
+
+/* ========================================================= */
+/* FOCO DE TECLADO                                            */
+/* ========================================================= */
+
+.match-setup-screen button:focus-visible {
+
+    outline:
+        2px solid rgba(255, 255, 255, 0.90);
+
+    outline-offset:
+        3px;
+}
+
+
+/* ========================================================= */
+/* SEGURIDAD VISUAL                                            */
+/* ========================================================= */
+
+.match-setup-screen button {
+
+    font-family:
+        inherit;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    user-select:
+        none;
+}
+
+
+.match-setup-screen img {
+
+    -webkit-user-drag:
+        none;
+
+    user-select:
+        none;
+}
+
+
+/* ========================================================= */
+/* EVITAR SCROLL                                               */
+/* ========================================================= */
+
+.match-setup-screen,
+.match-setup-screen * {
+
+    box-sizing:
+        border-box;
+}
+
+
+.match-setup-screen {
+
+    touch-action:
+        manipulation;
+}
+
+
+/* ========================================================= */
+/* ESTADO OCULTO                                               */
+/* ========================================================= */
+
+.match-setup-screen.hidden {
+
+    display:
+        none !important;
+}
