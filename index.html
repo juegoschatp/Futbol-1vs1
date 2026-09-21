@@ -24,6 +24,7 @@
          ========================================================= -->
 
     <link rel="stylesheet" href="CSS/global.css">
+    <link rel="stylesheet" href="CSS/loading.css">
 
     <link rel="stylesheet" href="CSS/intro.css">
     <link rel="stylesheet" href="CSS/menu.css">
@@ -39,6 +40,46 @@
 
 
 <body>
+
+
+   <!-- =========================================================
+     PANTALLA DE CARGA
+     ========================================================= -->
+
+<section
+    id="loadingScreen"
+    aria-label="Cargando juego"
+>
+
+    <div class="loading-content">
+
+        <h1 class="loading-title">
+            FÚTBOL 1 VS 1
+        </h1>
+
+        <div class="loading-subtitle">
+            ARCADE FOOTBALL
+        </div>
+
+        <div id="loadingPercentage">
+            0%
+        </div>
+
+        <div class="loading-progress">
+
+            <div
+                id="loadingProgressBar"
+            ></div>
+
+        </div>
+
+        <div id="loadingStatus">
+            Preparando el juego...
+        </div>
+
+    </div>
+
+</section>
 
 
     <!-- =====================================================
@@ -1339,6 +1380,8 @@
     <!-- =========================================================
          SCRIPTS
          ========================================================= -->
+
+    <script src="JS/loadingScreen.js"></script>
 
     <script src="JS/audio.js"></script>
 
